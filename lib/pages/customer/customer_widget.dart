@@ -5,17 +5,17 @@ import 'package:powa_doc/bloc/bloc_provider.dart';
 import 'package:powa_doc/pages/home/home_bloc.dart';
 import 'package:powa_doc/pages/tasks/bloc/task_bloc.dart';
 
-import 'package:powa_doc/pages/product/product_db.dart';
-import 'package:powa_doc/pages/product/product.dart';
-import 'package:powa_doc/pages/product/product_bloc.dart';
+import 'package:powa_doc/pages/customer/customer_db.dart';
+import 'package:powa_doc/pages/customer/customer.dart';
+import 'package:powa_doc/pages/customer/customer_bloc.dart';
 
 
-class ProductPage extends StatelessWidget {
+class CustomerPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    ProductBloc productBloc = BlocProvider.of(context);
-    return StreamBuilder<List<Product>>(
-      stream: productBloc.product,
+    CustomerBloc customerBloc = BlocProvider.of(context);
+    return StreamBuilder<List<Customer>>(
+      stream: customerBloc.customer,
       builder: (context, snapshot) {
         if (snapshot.hasData) {
           return LabelExpansionTileWidget(snapshot.data);
@@ -28,47 +28,47 @@ class ProductPage extends StatelessWidget {
 }
 
 class LabelExpansionTileWidget extends StatelessWidget {
-  final List<Product> _product;
+  final List<Customer> _customer;
 
-  LabelExpansionTileWidget(this._product);
+  LabelExpansionTileWidget(this._customer);
 
   @override
   Widget build(BuildContext context) {
     return ExpansionTile(
-      leading: Icon(Icons.flash_auto),
-      title: Text("Sản phẩm - Dịch vụ",
+      leading: Icon(Icons.dialpad),
+      title: Text("Khách hàng",
           style: TextStyle(fontSize: 14.0, fontWeight: FontWeight.bold)),
       children: buildSide(context),
     );
   }
 
   List<Widget> buildSide(BuildContext context) {
-    ProductBloc _productBloc = BlocProvider.of(context);
+    CustomerBloc _customerBloc = BlocProvider.of(context);
     List<Widget> projectWidgetList = List();
-    _product.forEach((product) => projectWidgetList.add(ProductRow(product)));
-    _productBloc.refresh();
+    _customer.forEach((customer) => projectWidgetList.add(CustomerRow(customer)));
+    _customerBloc.refresh();
     return projectWidgetList;
   }
 }
 
-class ProductRow extends StatelessWidget {
-  final Product product;
+class CustomerRow extends StatelessWidget {
+  final Customer customer;
 
-  ProductRow(this.product);
+  CustomerRow(this.customer);
 
   @override
   Widget build(BuildContext context) {
     HomeBloc homeBloc = BlocProvider.of(context);
     return ListTile(
       onTap: () {
-        homeBloc.applyFilter(" ${product.title}", Filter.byLabel(product.title));
+        homeBloc.applyFilter(" ${customer.title}", Filter.byLabel(customer.title));
         Navigator.pop(context);
       },
       leading: Container(
         width: 24.0,
         height: 24.0,
       ),
-      title: Text(" ${product.title}"),
+      title: Text(" ${customer.title}"),
       trailing: Container(
         height: 10.0,
         width: 10.0,

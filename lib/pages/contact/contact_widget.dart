@@ -5,17 +5,17 @@ import 'package:powa_doc/bloc/bloc_provider.dart';
 import 'package:powa_doc/pages/home/home_bloc.dart';
 import 'package:powa_doc/pages/tasks/bloc/task_bloc.dart';
 
-import 'package:powa_doc/pages/product/product_db.dart';
-import 'package:powa_doc/pages/product/product.dart';
-import 'package:powa_doc/pages/product/product_bloc.dart';
+import 'package:powa_doc/pages/contact/contact_db.dart';
+import 'package:powa_doc/pages/contact/contact.dart';
+import 'package:powa_doc/pages/contact/contact_bloc.dart';
 
 
-class ProductPage extends StatelessWidget {
+class ContactPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    ProductBloc productBloc = BlocProvider.of(context);
-    return StreamBuilder<List<Product>>(
-      stream: productBloc.product,
+    ContactBloc contactBloc = BlocProvider.of(context);
+    return StreamBuilder<List<Contact>>(
+      stream: contactBloc.contact,
       builder: (context, snapshot) {
         if (snapshot.hasData) {
           return LabelExpansionTileWidget(snapshot.data);
@@ -28,47 +28,47 @@ class ProductPage extends StatelessWidget {
 }
 
 class LabelExpansionTileWidget extends StatelessWidget {
-  final List<Product> _product;
+  final List<Contact> _contact;
 
-  LabelExpansionTileWidget(this._product);
+  LabelExpansionTileWidget(this._contact);
 
   @override
   Widget build(BuildContext context) {
     return ExpansionTile(
-      leading: Icon(Icons.flash_auto),
-      title: Text("Sản phẩm - Dịch vụ",
+      leading: Icon(Icons.info_outline),
+      title: Text("Liên hệ",
           style: TextStyle(fontSize: 14.0, fontWeight: FontWeight.bold)),
       children: buildSide(context),
     );
   }
 
   List<Widget> buildSide(BuildContext context) {
-    ProductBloc _productBloc = BlocProvider.of(context);
+    ContactBloc _contactBloc = BlocProvider.of(context);
     List<Widget> projectWidgetList = List();
-    _product.forEach((product) => projectWidgetList.add(ProductRow(product)));
-    _productBloc.refresh();
+    _contact.forEach((contact) => projectWidgetList.add(ContactRow(contact)));
+    _contactBloc.refresh();
     return projectWidgetList;
   }
 }
 
-class ProductRow extends StatelessWidget {
-  final Product product;
+class ContactRow extends StatelessWidget {
+  final Contact contact;
 
-  ProductRow(this.product);
+  ContactRow(this.contact);
 
   @override
   Widget build(BuildContext context) {
     HomeBloc homeBloc = BlocProvider.of(context);
     return ListTile(
       onTap: () {
-        homeBloc.applyFilter(" ${product.title}", Filter.byLabel(product.title));
+        homeBloc.applyFilter(" ${contact.title}", Filter.byLabel(contact.title));
         Navigator.pop(context);
       },
       leading: Container(
         width: 24.0,
         height: 24.0,
       ),
-      title: Text(" ${product.title}"),
+      title: Text(" ${contact.title}"),
       trailing: Container(
         height: 10.0,
         width: 10.0,

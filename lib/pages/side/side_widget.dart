@@ -91,5 +91,6 @@ class SideRow extends StatelessWidget {
         ),
       ),
     );
+
   }
 }

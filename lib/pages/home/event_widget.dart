@@ -78,7 +78,9 @@ class EventWidget extends StatelessWidget {
             ),
           ],
         ),
+
       ),
     );
+
   }
 }

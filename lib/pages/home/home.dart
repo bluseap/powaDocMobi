@@ -36,10 +36,9 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    //final HomeBloc homeBloc = BlocProvider.of(context);
+    final HomeBloc homeBloc = BlocProvider.of(context);
 
     String mess = context.toString();
-
     void _showDialog(messnger) {
       // flutter defined function
       showDialog(
@@ -63,18 +62,18 @@ class HomePage extends StatelessWidget {
       );
     }
 
-    //homeBloc.filter.listen((filter) {
-      //_taskBloc.updateFilters(filter);
-    //});
+    /*homeBloc.filter.listen((filter) {
+      _taskBloc.updateFilters(filter);
+    });*/
     return Scaffold(
       appBar: AppBar(
         title: StreamBuilder<String>(
             initialData: 'Powaco',
-            //stream: homeBloc.title,
+            stream: homeBloc.title,
             builder: (context, snapshot) {
               return Text(snapshot.data);
             }),
-        actions: <Widget>[buildPopupMenu(context)],
+        //actions: <Widget>[buildPopupMenu(context)],
       ),
       floatingActionButton: FloatingActionButton(
         child: Icon(
@@ -113,7 +112,7 @@ class HomePage extends StatelessWidget {
         create: (_) => AppState(),
         child: Stack(
           children: <Widget>[
-            /*HomePageBackground(
+            HomePageBackground(
               screenHeight: MediaQuery.of(context).size.height,
             ),
             SafeArea(
@@ -127,7 +126,9 @@ class HomePage extends StatelessWidget {
                         builder: (context, appState, _) => SingleChildScrollView(
                           scrollDirection: Axis.horizontal,
                           child: Row(
-                            children: <Widget>[for (final category in categories) CategoryWidget(category: category)],
+                            children: <Widget>[
+                              for (final category in categories) CategoryWidget(category: category)
+                            ],
                           ),
                         ),
                       ),
@@ -150,15 +151,19 @@ class HomePage extends StatelessWidget {
                                   event: event,
                                 ),
                               )
+
                           ],
                         ),
                       ),
                     )
+
                   ]
+
                 )
+
               )
-            ),*/
-            FutureBuilder<List<Side>>(
+            ),
+            /*FutureBuilder<List<Side>>(
                 future: fetchSide(http.Client()),
                 builder: (context, snapshot) {
 
@@ -169,7 +174,7 @@ class HomePage extends StatelessWidget {
                       ? SideList(side: snapshot.data)
                       : Center(child: CircularProgressIndicator());
                 }
-            )
+            )*/
           ]
         )
 
@@ -239,7 +244,7 @@ class SideList extends StatelessWidget {
       ),
       itemCount: side.length,
       itemBuilder: (context, index) {
-        _sideDB.insertSide(side[index].name);
+        //_sideDB.insertSide(side[index].name);
         //return Text(side[index].name);
       },
     );

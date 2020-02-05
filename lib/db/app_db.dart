@@ -11,7 +11,10 @@ import 'package:powa_doc/pages/tasks/models/tasks.dart';
 import 'package:powa_doc/pages/side/side.dart';
 
 import 'package:powa_doc/pages/intro/intro.dart';
-
+import 'package:powa_doc/pages/news/news.dart';
+import 'package:powa_doc/pages/product/product.dart';
+import 'package:powa_doc/pages/customer/customer.dart';
+import 'package:powa_doc/pages/contact/contact.dart';
 
 /// This is the singleton database class which handlers all database transactions
 /// All the task raw queries is handle here and return a Future<T> with result
@@ -48,6 +51,10 @@ class AppDatabase {
           await _createLabelTable(db);
           await _createCategorySide(db);
           await _createIntro(db);
+          await _createNews(db);
+          await _createProduct(db);
+          await _createCustomer(db);
+          await _createContact(db);
         }, onUpgrade: (Database db, int oldVersion, int newVersion) async {
           await db.execute("DROP TABLE ${Tasks.tblTask}");
           await db.execute("DROP TABLE ${Project.tblProject}");
@@ -55,11 +62,19 @@ class AppDatabase {
           await db.execute("DROP TABLE ${Label.tblLabel}");
           await db.execute("DROP TABLE ${Side.tblCategorySide}");
           await db.execute("DROP TABLE ${Intro.tblIntro}");
+          await db.execute("DROP TABLE ${News.tblNews}");
+          await db.execute("DROP TABLE ${Product.tblProduct}");
+          await db.execute("DROP TABLE ${Customer.tblCustomer}");
+          await db.execute("DROP TABLE ${Contact.tblContact}");
           await _createProjectTable(db);
           await _createTaskTable(db);
           await _createLabelTable(db);
           await _createCategorySide(db);
           await _createIntro(db);
+          await _createNews(db);
+          await _createProduct(db);
+          await _createCustomer(db);
+          await _createContact(db);
         });
     didInit = true;
   }
@@ -147,7 +162,86 @@ class AppDatabase {
           "${Intro.dbCreateDate} TEXT,"
           "${Intro.dbUpdateDate} TEXT );"
       );
+    });
+  }
 
+  Future _createNews(Database db) {
+    return db.transaction((Transaction txn) async {
+      txn.execute("CREATE TABLE ${News.tblNews} ("
+          "${Intro.dbId} INTERGER,"
+          "${Intro.dbCorporationId} INTERGER,"
+          "${Intro.dbCorporationName} TEXT,"
+          "${Intro.dbThumbnail} TEXT,"
+          "${Intro.dbImage} TEXT,"
+          "${Intro.dbCreatedDateIntro} INTERGER,"
+          "${Intro.dbPublishedDateIntro} INTERGER,"
+          "${Intro.dbSource} NUMERIC,"
+          "${Intro.dbTitle} NUMERIC,"
+          "${Intro.dbContents} TEXT,"
+          "${Intro.dbDescription} TEXT,"
+          "${Intro.dbCreateDate} TEXT,"
+          "${Intro.dbUpdateDate} TEXT );"
+      );
+    });
+  }
+
+  Future _createProduct(Database db) {
+    return db.transaction((Transaction txn) async {
+      txn.execute("CREATE TABLE ${Product.tblProduct} ("
+          "${Intro.dbId} INTERGER,"
+          "${Intro.dbCorporationId} INTERGER,"
+          "${Intro.dbCorporationName} TEXT,"
+          "${Intro.dbThumbnail} TEXT,"
+          "${Intro.dbImage} TEXT,"
+          "${Intro.dbCreatedDateIntro} INTERGER,"
+          "${Intro.dbPublishedDateIntro} INTERGER,"
+          "${Intro.dbSource} NUMERIC,"
+          "${Intro.dbTitle} NUMERIC,"
+          "${Intro.dbContents} TEXT,"
+          "${Intro.dbDescription} TEXT,"
+          "${Intro.dbCreateDate} TEXT,"
+          "${Intro.dbUpdateDate} TEXT );"
+      );
+    });
+  }
+
+  Future _createCustomer(Database db) {
+    return db.transaction((Transaction txn) async {
+      txn.execute("CREATE TABLE ${Customer.tblCustomer} ("
+          "${Intro.dbId} INTERGER,"
+          "${Intro.dbCorporationId} INTERGER,"
+          "${Intro.dbCorporationName} TEXT,"
+          "${Intro.dbThumbnail} TEXT,"
+          "${Intro.dbImage} TEXT,"
+          "${Intro.dbCreatedDateIntro} INTERGER,"
+          "${Intro.dbPublishedDateIntro} INTERGER,"
+          "${Intro.dbSource} NUMERIC,"
+          "${Intro.dbTitle} NUMERIC,"
+          "${Intro.dbContents} TEXT,"
+          "${Intro.dbDescription} TEXT,"
+          "${Intro.dbCreateDate} TEXT,"
+          "${Intro.dbUpdateDate} TEXT );"
+      );
+    });
+  }
+
+  Future _createContact(Database db) {
+    return db.transaction((Transaction txn) async {
+      txn.execute("CREATE TABLE ${Contact.tblContact} ("
+          "${Intro.dbId} INTERGER,"
+          "${Intro.dbCorporationId} INTERGER,"
+          "${Intro.dbCorporationName} TEXT,"
+          "${Intro.dbThumbnail} TEXT,"
+          "${Intro.dbImage} TEXT,"
+          "${Intro.dbCreatedDateIntro} INTERGER,"
+          "${Intro.dbPublishedDateIntro} INTERGER,"
+          "${Intro.dbSource} NUMERIC,"
+          "${Intro.dbTitle} NUMERIC,"
+          "${Intro.dbContents} TEXT,"
+          "${Intro.dbDescription} TEXT,"
+          "${Intro.dbCreateDate} TEXT,"
+          "${Intro.dbUpdateDate} TEXT );"
+      );
     });
   }
 

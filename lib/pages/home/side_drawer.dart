@@ -15,6 +15,23 @@ import 'package:powa_doc/pages/intro/intro_db.dart';
 import 'package:powa_doc/pages/intro/intro_bloc.dart';
 import 'package:powa_doc/pages/intro/intro_widget.dart';
 
+import 'package:powa_doc/pages/news/news_db.dart';
+import 'package:powa_doc/pages/news/news_bloc.dart';
+import 'package:powa_doc/pages/news/news_widget.dart';
+
+import 'package:powa_doc/pages/product/product_db.dart';
+import 'package:powa_doc/pages/product/product_bloc.dart';
+import 'package:powa_doc/pages/product/product_widget.dart';
+
+import 'package:powa_doc/pages/customer/customer_db.dart';
+import 'package:powa_doc/pages/customer/customer_bloc.dart';
+import 'package:powa_doc/pages/customer/customer_widget.dart';
+
+import 'package:powa_doc/pages/contact/contact_db.dart';
+import 'package:powa_doc/pages/contact/contact_bloc.dart';
+import 'package:powa_doc/pages/contact/contact_widget.dart';
+
+
 class SideDrawer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -51,6 +68,22 @@ class SideDrawer extends StatelessWidget {
             bloc: IntroBloc(IntroDB.get()),
             child: IntroPage()
           ),
+          BlocProvider(
+              bloc: NewsBloc(NewsDB.get()),
+              child: NewsPage()
+          ),
+          BlocProvider(
+              bloc: ProductBloc(ProductDB.get()),
+              child: ProductPage()
+          ),
+          BlocProvider(
+              bloc: CustomerBloc(CustomerDB.get()),
+              child: CustomerPage()
+          ),
+          BlocProvider(
+              bloc: ContactBloc(ContactDB.get()),
+              child: ContactPage()
+          )
           /*ListTile(
               leading: Icon(Icons.inbox),
               title: Text("Inbox"),

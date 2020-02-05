@@ -15,7 +15,42 @@ final allCategory = Category(
   icon: Icons.search,
 );
 
-final musicCategory = Category(
+final introCategory = Category(
+  categoryId: 1,
+  name: "Giới thiệu",
+  icon: Icons.turned_in_not,
+);
+final newsCategory = Category(
+  categoryId: 2,
+  name: "Tin tức",
+  icon: Icons.image_aspect_ratio,
+);
+final productCategory = Category(
+  categoryId: 3,
+  name: "Sản phẩm",
+  icon: Icons.flash_auto,
+);
+final customerCategory = Category(
+  categoryId: 4,
+  name: "Khách hàng",
+  icon: Icons.dialpad,
+);
+final contactCategory = Category(
+  categoryId: 5,
+  name: "Liên hệ",
+  icon: Icons.info_outline,
+);
+
+final categories = [
+  //allCategory,
+  introCategory,
+  newsCategory,
+  productCategory,
+  customerCategory,
+  contactCategory
+];
+
+/*final musicCategory = Category(
   categoryId: 1,
   name: "Music",
   icon: Icons.music_note,
@@ -45,4 +80,4 @@ final categories = [
   meetUpCategory,
   golfCategory,
   birthdayCategory,
-];
+];*/
