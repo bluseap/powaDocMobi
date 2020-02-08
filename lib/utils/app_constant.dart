@@ -21,7 +21,10 @@ const String FACEBOOK_URL = "https://www.facebook.com/Bursid";
 const String GITHUB_URL = "https://github.com/burhanrashid52";
 const String PROJECT_URL = "https://github.com/burhanrashid52/WhatTodo";
 const String ISSUE_URL = "https://github.com/burhanrashid52/WhatTodo/issues";
+const String ERROR_URL = "http://powaco.ddns.net";
+
 const String README_URL =
     "https://github.com/burhanrashid52/WhatTodo/blob/master/README.md";
 const String EMAIL_URL =
     "mailto:<burhanrashid5253@gmail.com>?subject=WhatTodo%20Query&body=Hi";
+

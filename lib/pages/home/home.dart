@@ -26,6 +26,8 @@ import 'package:powa_doc/utils/collapsable_expand_tile.dart';
 import 'package:powa_doc/utils/app_util.dart';
 import 'package:powa_doc/pages/side/side_db.dart';
 
+import 'package:powa_doc/pages/registerdoc/registerdoc_user.dart';
+
 class HomePage extends StatelessWidget {
   //final TaskBloc _taskBloc = TaskBloc(TaskDB.get());
   final GlobalKey<FormState> _formState = GlobalKey<FormState>();
@@ -82,18 +84,14 @@ class HomePage extends StatelessWidget {
         ),
         backgroundColor: Colors.orange,
         onPressed: () async {
-         /* var blocProviderAddTask = BlocProvider(
-            bloc: AddTaskBloc(TaskDB.get(), ProjectDB.get(), LabelDB.get()),
-            child: AddTaskScreen(),
+
+          Navigator.of(context).push(
+            MaterialPageRoute(
+              builder: (context) => RegisterDocUser(),
+            ),
           );
-          await Navigator.push(
-            context,
-            MaterialPageRoute<bool>(builder: (context) => blocProviderAddTask),
-          );
-          _taskBloc.refresh();*/
 
           //_sideDB.insertSide("Xuân Đào Minh");
-
           //_showDialog(mess);
           /*final SideBloc sideBloc = BlocProvider.of(context);
           sideBloc.sideExist.listen((isExist) {

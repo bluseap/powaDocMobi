@@ -7,7 +7,7 @@ class AboutUsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("About"),
+        title: Text("Tác giả"),
       ),
       body: Container(
         child: Padding(
@@ -20,13 +20,13 @@ class AboutUsScreen extends StatelessWidget {
                     ListTile(
                         leading:
                         Icon(Icons.bug_report, color: Colors.black),
-                        title: Text("Rpeort an Issue"),
-                        subtitle: Text("Having an issue ? Report it here"),
-                        onTap: () => launchURL(ISSUE_URL)),
+                        title: Text("Thông báo lỗi !"),
+                        subtitle: Text("Xảy ra lỗi ? Gửi mail cho tôi."),
+                        onTap: () => launchURL(ERROR_URL)),
                     ListTile(
                       leading: Icon(Icons.update, color: Colors.black),
-                      title: Text("Version"),
-                      subtitle: Text("0.0.1"),
+                      title: Text("Phiên bản"),
+                      subtitle: Text("1.1.1"),
                     )
                   ],
                 ),
@@ -37,7 +37,7 @@ class AboutUsScreen extends StatelessWidget {
                   children: <Widget>[
                     Padding(
                       padding: const EdgeInsets.only(top: 16.0, left: 16.0),
-                      child: Text("Author",
+                      child: Text("Bản quyền",
                           style: TextStyle(
                               color: Colors.black,
                               fontWeight: FontWeight.bold,
@@ -46,24 +46,24 @@ class AboutUsScreen extends StatelessWidget {
                     ListTile(
                       leading:
                       Icon(Icons.perm_identity, color: Colors.black),
-                      title: Text("Burhanuddin Rashid"),
-                      subtitle: Text("burhanrashid52"),
-                      onTap: () => launchURL(GITHUB_URL),
+                      title: Text("Công ty CP Điện Nước An giang"),
+                      subtitle: Text("Powaco"),
+                      onTap: () => launchURL(ERROR_URL),
                     ),
-                    ListTile(
+                    /*ListTile(
                         leading:
                         Icon(Icons.bug_report, color: Colors.black),
                         title: Text("Fork on Github"),
-                        onTap: () => launchURL(PROJECT_URL)),
+                        onTap: () => launchURL(ERROR_URL)),*/
                     ListTile(
                         leading: Icon(Icons.email, color: Colors.black),
-                        title: Text("Send an Email"),
-                        subtitle: Text("burhanrashid5253@gmail.com"),
-                        onTap: () => launchURL(EMAIL_URL)),
+                        title: Text("Email"),
+                        subtitle: Text("ctycpdn.ag@gmail.com"),
+                        onTap: () => launchURL(ERROR_URL)),
                   ],
                 ),
               ),
-              Card(
+              /*Card(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
@@ -82,18 +82,18 @@ class AboutUsScreen extends StatelessWidget {
                         children: <Widget>[
                           IconButton(
                             icon: Image.asset("assets/twitter_logo.png",scale: 8.75,),
-                            onPressed: () => launchURL(TWITTER_URL),
+                            onPressed: () => launchURL(ERROR_URL),
                           ),
                           IconButton(
                             icon: Image.asset("assets/facebook_logo.png"),
-                            onPressed: () => launchURL(FACEBOOK_URL),
+                            onPressed: () => launchURL(ERROR_URL),
                           )
                         ],
                       ),
                     ),
                   ],
                 ),
-              ),
+              ),*/
               Card(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
