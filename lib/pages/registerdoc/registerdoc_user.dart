@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:powa_doc/bloc/bloc_provider.dart';
+
 import 'package:powa_doc/pages/registerdoc/registerdoc.dart';
 //import 'package:powa_doc/pages/registerdoc/registerdoc_bloc.dart';
 import 'package:powa_doc/utils/app_util.dart';
@@ -12,11 +12,16 @@ import 'dart:convert';
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 
-import 'dart:async';
 import 'package:flutter/services.dart';
 import 'package:imei_plugin/imei_plugin.dart';
 
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+
+import 'dart:io';
+import 'package:dio/dio.dart';
+
+import 'package:http/http.dart' as http;
 
 class RegisterDocUser extends StatefulWidget {
   RegisterDocUser() : super();
@@ -33,6 +38,21 @@ class DropDownState extends State<RegisterDocUser> {
 
   final txtUserName = TextEditingController();
   final txtPass = TextEditingController();
+
+  static var uri = "http://192.168.1.19:88";
+  static BaseOptions options = BaseOptions(
+      baseUrl: uri,
+      responseType: ResponseType.plain,
+      connectTimeout: 30000,
+      receiveTimeout: 30000,
+      validateStatus: (code) {
+        if (code >= 200) {
+          return true;
+        }
+      });
+  static Dio dio = Dio(options);
+  bool _isLoading = false;
+  String firebasenotifiId = "";
 
   String _platformImei = 'Unknown';
 
@@ -86,66 +106,75 @@ class DropDownState extends State<RegisterDocUser> {
     });
   }
 
-
   String _message = '';
   final FirebaseMessaging _firebaseMessaging = FirebaseMessaging();
+
   _register() {
-    _firebaseMessaging.getToken().then((token) => print(token));
+    _firebaseMessaging.getToken().then(
+            (token) => print(token)
+    );
   }
+
   void getMessage(){
     _firebaseMessaging.configure(
         onMessage: (Map<String, dynamic> message) async {
-          print('on message $message');
+          print('1 on message $message');
           setState(() => _message = message["notification"]["title"]);
-        }, onResume: (Map<String, dynamic> message) async {
-      print('on resume $message');
-      setState(() => _message = message["notification"]["title"]);
-    }, onLaunch: (Map<String, dynamic> message) async {
-      print('on launch $message');
-      setState(() => _message = message["notification"]["title"]);
-    });
+
+        },
+        onResume: (Map<String, dynamic> message) async {
+          print('2 on resume $message');
+          setState(() => _message = message["notification"]["title"]);
+        },
+        onLaunch: (Map<String, dynamic> message) async {
+          print('3 on launch $message');
+          setState(() => _message = message["notification"]["title"]);
+        }
+    );
   }
 
-  @override
-  Widget build(BuildContext context) {
+    @override
+    Widget build(BuildContext context) {
 
-    final FieldUserName = TextField(
-      controller: txtUserName,
-      obscureText: false,
-      style: style,
-      decoration: InputDecoration(
+      final FieldUserName = TextField(
+        controller: txtUserName,
+        obscureText: false,
+        style: style,
+        decoration: InputDecoration(
           contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
           hintText: "Người dùng",
           border:
-            OutlineInputBorder(borderRadius: BorderRadius.circular(32.0)),
+          OutlineInputBorder(borderRadius: BorderRadius.circular(32.0)),
 
-      ),
-    );
-    final FieldPass = TextField(
-      controller: txtPass,
-      obscureText: true,
-      style: style,
-      decoration: InputDecoration(
-          contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-          hintText: "Mật mã",
-          border:
+        ),
+      );
+      final FieldPass = TextField(
+        controller: txtPass,
+        obscureText: true,
+        style: style,
+        decoration: InputDecoration(
+            contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+            hintText: "Mật mã",
+            border:
             OutlineInputBorder(borderRadius: BorderRadius.circular(32.0))
-      ),
-    );
-    final registerNameCode = DropdownButton(
-      value: _selectedRegisterName,
-      items: _dropdownMenuItems,
-      onChanged: onChangeDropdownItem,
-    );
-    final loginButon = Material(
-      elevation: 5.0,
-      borderRadius: BorderRadius.circular(30.0),
-      color: const Color(0xFFFF4700),
-      child: MaterialButton(
-        minWidth: MediaQuery.of(context).size.width,
-        padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-        onPressed: () {
-          showDialog(
+        ),
+      );
+      final registerNameCode = DropdownButton(
+        value: _selectedRegisterName,
+        items: _dropdownMenuItems,
+        onChanged: onChangeDropdownItem,
+      );
+      final loginButon = Material(
+        elevation: 5.0,
+        borderRadius: BorderRadius.circular(30.0),
+        color: const Color(0xFFFF4700),
+        child: MaterialButton(
+          minWidth: MediaQuery.of(context).size.width,
+          padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+          onPressed: () {
+            signIn(txtUserName.text, txtPass.text, _platformImei);
+
+            /*showDialog(
             context: context,
             builder: (_) => NetworkGiffyDialog (
               image: Image.network("https://raw.githubusercontent.com/Shashank02051997/FancyGifDialog-Android/master/GIF's/gif14.gif", fit: BoxFit.cover),
@@ -158,80 +187,72 @@ class DropDownState extends State<RegisterDocUser> {
               ),
               onOkButtonPressed: () {
                 Navigator.of(context).pop();
-                /*return AlertDialog(
-                    title: Text('Rewind and remember'),
-                    content: SingleChildScrollView(
-                      child: ListBody(
-                        children: <Widget>[
-                          Text('You will never be satisfied.'),
-                          Text('You\’re like me. I’m never satisfied.'),
-                        ],
-                      ),
-                    )
-                );*/
+
               }
             )
-          );
+          );*/
 
-        },
-        child: Text("Đăng ký nhận tin",
-            textAlign: TextAlign.center,
-            style: style.copyWith(
-                color: Colors.white, fontWeight: FontWeight.bold)),
-      ),
-    );
-
-    return Scaffold(
-      key: _scaffoldState,
-      appBar: AppBar(
-        title: Text("Đăng ký nhận tin"),
-      ),
-      floatingActionButton: FloatingActionButton(
-          child: Icon(
-            Icons.near_me,
-            color: Colors.white,
+          },
+          child: Text("Đăng ký nhận tin",
+              textAlign: TextAlign.center,
+              style: style.copyWith(color: Colors.white, fontWeight: FontWeight.bold)
           ),
-          onPressed: () async {
-            //if (_formState.currentState.validate()) {
-            //  _formState.currentState.save();
+        ),
+      );
+
+      return Scaffold(
+        key: _scaffoldState,
+        appBar: AppBar(
+          title: Text("Đăng ký nhận tin"),
+        ),
+        floatingActionButton: FloatingActionButton(
+            child: Icon(
+              Icons.near_me,
+              color: Colors.white,
+            ),
+            onPressed: () async {
+              //if (_formState.currentState.validate()) {
+              //  _formState.currentState.save();
               //var sideCategory = Side.create(labelName);
               //sideBloc.checkIfSideExist(sideCategory);
-            //}
-            _register();
-          }),
-      body: Container(
-        alignment: Alignment.bottomCenter,
-        child: Stack(
-          children: <Widget>[
-            SafeArea(
-              //color: Colors.white,
-              child: Padding(
-                padding: const EdgeInsets.all(36.0),
-                child: Column(
-                  //crossAxisAlignment: CrossAxisAlignment.center,
-                 // mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    SizedBox(
-                  height: 110.0,
-                  child: Image.asset(
-                    "assets/logoPOWA.png",
-                    fit: BoxFit.contain,
+              //}
+
+              //_register();
+
+            }),
+        body: Container(
+          alignment: Alignment.bottomCenter,
+          child: Stack(
+              children: <Widget>[
+                SafeArea(
+                  //color: Colors.white,
+                  child: Padding(
+                    padding: const EdgeInsets.all(36.0),
+                    child: Column(
+                      //crossAxisAlignment: CrossAxisAlignment.center,
+                      // mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        SizedBox(
+                          height: 90.0,
+                          child: Image.asset(
+                            "assets/logoPOWA.png",
+                            fit: BoxFit.contain,
+                          ),
+                        ),
+                        SizedBox(height: 30.0),
+                        FieldUserName,
+                        SizedBox(height: 20.0),
+                        FieldPass,
+                        SizedBox(height: 20.0),
+                        registerNameCode,
+                        SizedBox(height: 30.0),
+                        loginButon,
+
+                      ],
+                    ),
                   ),
                 ),
-                    SizedBox(height: 45.0),
-                    FieldUserName,
-                    SizedBox(height: 25.0),
-                    FieldPass,
-                    SizedBox(height: 25.0),
-                    registerNameCode,
-                    SizedBox(height: 35.0),
-                    loginButon,
-
-                  ],
-                ),
-              ),
-            ),
-            /*FutureBuilder<List<RegisterDoc>>(
+                /*FutureBuilder<List<RegisterDoc>>(
                 future: fetchRegisterDoc(http.Client()),
                 builder: (context, snapshot) {
                   //_sideDB.insertSide("Xuân Đào Minh 2");
@@ -242,37 +263,135 @@ class DropDownState extends State<RegisterDocUser> {
                       : Center(child: CircularProgressIndicator());
                 }
             )*/
-          ]
+              ]
+          ),
         ),
-      ),
 
 
-    );
-  }
+      );
+    }
 
-  List<Widget> buildMaterialColors() {
-    List<Widget> projectWidgetList = List();
-    colorsPalettes.forEach((colors) {
-      projectWidgetList.add(ListTile(
-        leading: Icon(
-          Icons.label,
-          size: 16.0,
-          color: Color(colors.colorValue),
-        ),
-        title: Text(colors.colorName),
-        onTap: () {
-          expansionTile.currentState.collapse();
-          /*labelBloc.updateColorSelection(
+    List<Widget> buildMaterialColors() {
+      List<Widget> projectWidgetList = List();
+      colorsPalettes.forEach((colors) {
+        projectWidgetList.add(ListTile(
+          leading: Icon(
+            Icons.label,
+            size: 16.0,
+            color: Color(colors.colorValue),
+          ),
+          title: Text(colors.colorName),
+          onTap: () {
+            expansionTile.currentState.collapse();
+            /*labelBloc.updateColorSelection(
             ColorPalette(colors.colorName, colors.colorValue),
           );*/
-        },
-      ));
-    });
-    return projectWidgetList;
+          },
+        ));
+      });
+      return projectWidgetList;
+    }
+
+    signIn(String email, pass, platformImei) async {
+      Options options = Options(
+        contentType: "application/json",
+      );
+      Response response = await dio.post('/api/loginpodoc/lgpodoc',
+          data: {"UserName": email, "Password": pass}, options: options);
+
+      /*print(response.statusCode.toString());
+    print(response.headers.toString());
+    print(response.data.toString());
+    print(email+'-'+pass);*/
+
+      if(response.statusCode == 200) {
+        _firebaseMessaging.getToken().then(
+                (token) => {
+              firebasenotifiId = token//, print(token)
+            }
+        );
+        //print("imei2:" + firebasenotifiId);
+        //print("Imei:" + platformImei);
+
+        addRegisterDoc(firebasenotifiId, email, "1", "POWADOC", platformImei, "vi-VN");
+
+        /* showDialog(
+            context: context,
+            builder: (_) => NetworkGiffyDialog (
+                //image: Image.network("https://raw.githubusercontent.com/Shashank02051997/FancyGifDialog-Android/master/GIF's/gif14.gif", fit: BoxFit.cover),
+                title: Text('Granny Eating Chocolate', textAlign: TextAlign.center, style: TextStyle(
+                    fontSize: 22.0, fontWeight: FontWeight.w600 )
+                ),
+                description:Text('Đăng nhập thành công.',
+                    textAlign: TextAlign.center
+                ),
+                onOkButtonPressed: () {
+                  Navigator.of(context).pop();
+                }
+            )
+        );*/
+
+      }
+      else {
+        setState(() {
+          _isLoading = false;
+        });
+        print("Lỗi...");
+      }
+    }
+
+    //softname = "POWADOC"; culture = "vi-VN"
+    addRegisterDoc(firebasenotifiId, username, softid, softname, platformImei, culture) async {
+      Options options = Options(
+        contentType: "application/json",
+      );
+
+      Response response = await dio.post('/api/registerdoc?firebasenotifiId=' + firebasenotifiId + '&username=' + username + '&softId=' + softid + '&softName=' + softname + '&platformImei=' + platformImei + '&culture=vi-VN');
+      ///api/registerdoc?firebasenotifiId=e&username=lenguyen&softId=1&softName=22&eee=r2&culture=vi-VN
+      //print(firebasenotifiId + "-" + username+ "-" + softid+ "-" + softname+ "-" + platformImei+ "-" + culture);
+
+      //print(response.statusCode);
+      if(response.statusCode == 200) {
+        showDialog(
+            context: context,
+            builder: (_) => NetworkGiffyDialog (
+              //image: Image.network("https://raw.githubusercontent.com/Shashank02051997/FancyGifDialog-Android/master/GIF's/gif14.gif", fit: BoxFit.cover),
+                image: Image.asset("assets/logoPOWA.png"),
+                title: Text('Đăng ký nhận tin', textAlign: TextAlign.center, style: TextStyle(
+                    fontSize: 22.0, fontWeight: FontWeight.w600 )
+                ),
+                description:Text('Đăng ký thành công.',
+                    textAlign: TextAlign.center
+                ),
+                onOkButtonPressed: () {
+                  Navigator.of(context).pop();
+                }
+            )
+        );
+      }
+      else {
+        setState(() {
+          _isLoading = false;
+        });
+        showDialog(
+            context: context,
+            builder: (_) => NetworkGiffyDialog (
+                image: Image.asset("assets/logoPOWA.png"),
+                title: Text('Đăng ký lỗi', textAlign: TextAlign.center, style: TextStyle(
+                    fontSize: 22.0, fontWeight: FontWeight.w600,
+                    color: Colors.red )
+                ),
+                description:Text('Đăng ký lỗi! Kiểm tra lại.',
+                    textAlign: TextAlign.center
+                ),
+                onOkButtonPressed: () {
+                  Navigator.of(context).pop();
+                }
+            )
+        );
+      }
+    }
   }
-
-}
-
 
 
 Future<List<RegisterDoc>> fetchRegisterDoc(http.Client client) async {
@@ -326,26 +445,3 @@ class RegisterName {
     ];
   }
 }
-/*class DropDownState2 extends State<RegisterDocUser> {
-  List<RegisterName> _registerName = RegisterName.getRegisterName();
-  List<DropdownMenuItem<RegisterName>> _dropdownMenuItems;
-  RegisterName _selectedRegisterName;
-  @override
-  void initState() {
-    _dropdownMenuItems = buildDropdownMenuItems(_registerName);
-    _selectedRegisterName = _dropdownMenuItems[0].value;
-    super.initState();
-  }
-  List<DropdownMenuItem<RegisterName>> buildDropdownMenuItems(List companies) {
-    List<DropdownMenuItem<RegisterName>> items = List();
-    for (RegisterName company in companies) {
-      items.add(
-        DropdownMenuItem(
-          value: company,
-          child: Text(company.name),
-        ),
-      );
-    }
-    return items;
-  }
-}*/

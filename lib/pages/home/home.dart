@@ -27,6 +27,9 @@ import 'package:powa_doc/utils/app_util.dart';
 import 'package:powa_doc/pages/side/side_db.dart';
 
 import 'package:powa_doc/pages/registerdoc/registerdoc_user.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
+
+
 
 class HomePage extends StatelessWidget {
   //final TaskBloc _taskBloc = TaskBloc(TaskDB.get());
@@ -35,6 +38,34 @@ class HomePage extends StatelessWidget {
   final expansionTile = GlobalKey<CollapsibleExpansionTileState>();
 
   SideDB _sideDB = SideDB.get();
+
+  String _message = '';
+  final FirebaseMessaging _firebaseMessaging = FirebaseMessaging();
+  @override
+  void initState() {
+    getMessage();
+  }
+  void getMessage(){
+    _firebaseMessaging.configure(
+        onMessage: (Map<String, dynamic> message) async {
+          print('on message $message');
+          //setState(() => _message = message["notification"]["title"]);
+
+        },
+        onResume: (Map<String, dynamic> message) async {
+          print('on resume $message');
+          //setState(() => _message = message["notification"]["title"]);
+
+        },
+        onLaunch: (Map<String, dynamic> message) async {
+          print('on launch $message');
+          //setState(() => _message = message["notification"]["title"]);
+
+        }
+    );
+  }
+
+
 
   @override
   Widget build(BuildContext context) {

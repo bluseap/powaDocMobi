@@ -34,6 +34,8 @@ dependencies:
   imei_plugin: ^1.1.6
   flutter_local_notifications: ^1.1.5+1
   firebase_messaging: ^5.0.4
+  dio: ^3.0.8
+
 
 dev_dependencies:
   flutter_test:
