@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "656202097859",
+    "firebase_url": "https://powanotifi.firebaseio.com",
+    "project_id": "powanotifi",
+    "storage_bucket": "powanotifi.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:656202097859:android:5e1ceb1e6c6a3a8aa82e76",
+        "android_client_info": {
+          "package_name": "net.powaco.powa_doc"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "656202097859-hhpmj9katr04cbm9l4ad1bir1b361ltt.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "net.powaco.powa_doc",
+            "certificate_hash": "59f735a729eff06d188c9d1197e269c467c7d6d7"
+          }
+        },
+        {
+          "client_id": "656202097859-4ng43mr83j89a9dj374p15gbahagafg5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAFJQvbyNrJYOzb0MUe6prQMtNC0P1Toso"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "656202097859-4ng43mr83j89a9dj374p15gbahagafg5.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
