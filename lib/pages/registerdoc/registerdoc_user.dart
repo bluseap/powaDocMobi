@@ -6,6 +6,13 @@ import 'package:powa_doc/utils/app_util.dart';
 import 'package:powa_doc/utils/collapsable_expand_tile.dart';
 import 'package:powa_doc/utils/color_utils.dart';
 
+import 'package:powa_doc/pages/intro/intro.dart';
+import 'package:powa_doc/pages/intro/intro_bloc.dart';
+import 'package:powa_doc/pages/intro/intro_db.dart';
+import 'package:sqflite/sqflite.dart';
+
+import 'package:powa_doc/db/app_db.dart';
+
 import 'package:giffy_dialog/giffy_dialog.dart';
 import 'dart:async';
 import 'dart:convert';
@@ -22,6 +29,8 @@ import 'dart:io';
 import 'package:dio/dio.dart';
 
 import 'package:http/http.dart' as http;
+
+import 'package:powa_doc/bloc/bloc_provider.dart';
 
 class RegisterDocUser extends StatefulWidget {
   RegisterDocUser() : super();
@@ -136,6 +145,8 @@ class DropDownState extends State<RegisterDocUser> {
     @override
     Widget build(BuildContext context) {
 
+      IntroBloc introBloc = BlocProvider.of(context);
+
       final FieldUserName = TextField(
         controller: txtUserName,
         obscureText: false,
@@ -211,13 +222,32 @@ class DropDownState extends State<RegisterDocUser> {
               color: Colors.white,
             ),
             onPressed: () async {
-              //if (_formState.currentState.validate()) {
-              //  _formState.currentState.save();
-              //var sideCategory = Side.create(labelName);
-              //sideBloc.checkIfSideExist(sideCategory);
-              //}
+              if (_formState.currentState.validate()) {
+                _formState.currentState.save();
 
-              //_register();
+                var intro = Intro.create(
+                    1,1,"PO", "Tiêu đề giới hiệu", "Mô tả công ty", "2019/1/1", "2019/2/2"        );
+                print(intro.description);
+                introBloc.checkIfIntroExist(intro);
+
+                showDialog(
+                    context: context,
+                    builder: (_) => NetworkGiffyDialog (
+                        image: Image.asset("assets/logoPOWA.png"),
+                        title: Text('Thêm mới Giới thiệu', textAlign: TextAlign.center, style: TextStyle(
+                            fontSize: 22.0, fontWeight: FontWeight.w600,
+                            color: Colors.lightBlue )
+                        ),
+                        description:Text('Thêm mới Giới thiệu thành công.',
+                            textAlign: TextAlign.center
+                        ),
+                        onOkButtonPressed: () {
+                          Navigator.of(context).pop();
+                        }
+                    )
+                );
+
+              }
 
             }),
         body: Container(
@@ -303,6 +333,7 @@ class DropDownState extends State<RegisterDocUser> {
     print(response.headers.toString());
     print(response.data.toString());
     print(email+'-'+pass);*/
+     // print(email+'-'+pass);
 
       if(response.statusCode == 200) {
         _firebaseMessaging.getToken().then(

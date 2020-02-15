@@ -43,4 +43,10 @@ class IntroBloc implements BlocBase {
     _colorController.sink.add(colorPalette);
   }
 
+  void checkIfIntroExist(Intro intro) async {
+    _introDB.isIntroExits(intro).then((isExist) {
+      _introExistController.sink.add(isExist);
+    });
+  }
+
 }

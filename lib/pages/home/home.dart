@@ -29,6 +29,9 @@ import 'package:powa_doc/pages/side/side_db.dart';
 import 'package:powa_doc/pages/registerdoc/registerdoc_user.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 
+import 'package:powa_doc/bloc/bloc_provider.dart';
+import 'package:powa_doc/pages/intro/intro_bloc.dart';
+import 'package:powa_doc/pages/intro/intro_db.dart';
 
 
 class HomePage extends StatelessWidget {
@@ -116,11 +119,18 @@ class HomePage extends StatelessWidget {
         backgroundColor: Colors.orange,
         onPressed: () async {
 
-          Navigator.of(context).push(
+          /*Navigator.of(context).push(
             MaterialPageRoute(
               builder: (context) => RegisterDocUser(),
+
             ),
+          );*/
+          var blocLabelProvider = BlocProvider(
+            bloc: IntroBloc(IntroDB.get()),
+            child: RegisterDocUser(),
           );
+          await Navigator.push(context,
+              MaterialPageRoute<bool>(builder: (context) => blocLabelProvider));
 
           //_sideDB.insertSide("Xuân Đào Minh");
           //_showDialog(mess);

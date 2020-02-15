@@ -26,15 +26,38 @@ class IntroDB {
     return projects;
   }
 
-  Future insertIntro(String name) async {
+  Future<bool> isIntroExits(Intro intro) async {
+    print(intro.title);
+    var db = await _appDatabase.getDb();
+    var result = await db.rawQuery(
+        "SELECT * FROM ${Intro.tblIntro} WHERE ${Intro.dbId} = -1 ");
+    if (result.length == 0) {
+      return await insertIntro(intro).then((value) {
+        return false;
+      });
+    } else {
+      return true;
+    }
+  }
+
+  Future insertIntro(Intro intro) async {
+    print(intro.description);
     var db = await _appDatabase.getDb();
     await db.transaction((Transaction txn) async {
-      await txn.rawInsert('INSERT INTO '
-          '${Intro.tblIntro}( ${Intro.dbTitle} )'
-          ' VALUES ("${name}")'
+      await txn.rawInsert('INSERT OR REPLACE INTO '
+          '${Intro.tblIntro} ( ${Intro.dbId}, ${Intro.dbCorporationId}, ${Intro.dbCorporationName}, ${Intro.dbTitle},'
+          ' ${Intro.dbDescription}, ${Intro.dbCreateDate}, ${Intro.dbUpdateDate} )'
+          ' VALUES ( ${intro.id}, ${intro.corporationId}, "${intro.corporationName}", "${intro.title}",'
+          ' "${intro.description}", "${intro.createDate}", "${intro.updateDate}" )'
       );
     });
   }
+
+  void insertIntro2(intnhan) async {
+    await print(intnhan);
+
+  }
+
 
 
 }

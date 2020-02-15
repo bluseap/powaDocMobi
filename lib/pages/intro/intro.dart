@@ -22,6 +22,8 @@ class Intro {
   String corporationName, thumbnail, image, createdateIntro, publishedDateIntro, source, title, contents, description,
       createDate, updateDate;
 
+  Intro.create(this.id, this.corporationId, this.corporationName, this.title, this.description,
+      this.createDate, this.updateDate);
 
   Intro({this.id, this.corporationId, this.corporationName, this.thumbnail, this.image, this.createdateIntro ,
     this.publishedDateIntro, this.source, this.title, this.contents, this.description,

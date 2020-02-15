@@ -39,6 +39,35 @@ class AppDatabase {
     return _database;
   }
 
+
+  Future insertDb(Intro intro) {
+    print(intro.title);
+    //_initInsertTable(intro);
+  }
+  Future _initInsertTable(Intro intro) async {
+    // Get a location using path_provider
+    Directory documentsDirectory = await getApplicationDocumentsDirectory();
+    String path = join(documentsDirectory.path, "tasks.db");
+    _database = await openDatabase(path, version: 1,
+          onUpgrade: (Database db, int oldVersion, int newVersion) async {
+            await db.execute("DROP TABLE ${Intro.tblIntro}");
+            await _insertIntro(db, intro);
+        }
+     );
+    didInit = true;
+  }
+  Future _insertIntro(Database db, Intro intro) {
+    return db.transaction((Transaction txn) async {
+      txn.rawInsert('INSERT INTO '
+          '${Intro.tblIntro} ( ${Intro.dbId}, ${Intro.dbCorporationId}, ${Intro.dbCorporationName}, ${Intro.dbTitle},'
+          ' ${Intro.dbDescription}, ${Intro.dbCreateDate}, ${Intro.dbUpdateDate} )'
+          ' VALUES ( ${intro.id}, ${intro.corporationId}, "${intro.corporationName}", "${intro.title}",'
+          ' "${intro.description}", "${intro.createDate}", "${intro.updateDate}" )'
+      );
+    });
+  }
+
+
   Future _init() async {
     // Get a location using path_provider
     Directory documentsDirectory = await getApplicationDocumentsDirectory();
