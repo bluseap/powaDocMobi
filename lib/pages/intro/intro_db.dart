@@ -26,6 +26,30 @@ class IntroDB {
     return projects;
   }
 
+  Future<List<Intro>> getIntroId(Intro intro) async {
+    var db = await _appDatabase.getDb();
+    var result = await db.rawQuery('SELECT * FROM ${Intro.tblIntro} WHERE ${Intro.dbId} = ${intro.id}');
+
+    List<Intro> projects = new List();
+    for (Map<String, dynamic> item in result) {
+      var myProject = Intro.fromMap(item);
+      projects.add(myProject);
+    }
+    return projects;
+  }
+
+  Future<Intro> getIntroId2(Intro intro) async {
+    var db = await _appDatabase.getDb();
+    var result = await db.rawQuery('SELECT * FROM ${Intro.tblIntro} WHERE ${Intro.dbId} = ${intro.id}');
+
+    Intro projects =  new Intro();
+    for (Map<String, dynamic> item in result) {
+      var myProject = Intro.fromMap(item);
+      projects = myProject;
+    }
+    return projects;
+  }
+
   Future<bool> isIntroExits(Intro intro) async {
     print(intro.title);
     var db = await _appDatabase.getDb();

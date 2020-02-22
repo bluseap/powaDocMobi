@@ -9,8 +9,7 @@ class TaskBloc implements BlocBase {
   ///
   /// Synchronous Stream to handle the provision of the movie genres
   ///
-  StreamController<List<Tasks>> _taskController =
-  StreamController<List<Tasks>>.broadcast();
+  StreamController<List<Tasks>> _taskController = StreamController<List<Tasks>>.broadcast();
 
   Stream<List<Tasks>> get tasks => _taskController.stream;
 

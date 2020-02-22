@@ -4,13 +4,11 @@ import 'package:powa_doc/bloc/bloc_provider.dart';
 import 'package:powa_doc/pages/tasks/bloc/task_bloc.dart';
 
 class HomeBloc implements BlocBase {
-  StreamController<String> _titleController =
-  StreamController<String>.broadcast();
+  StreamController<String> _titleController = StreamController<String>.broadcast();
 
   Stream<String> get title => _titleController.stream;
 
-  StreamController<Filter> _filterController =
-  StreamController<Filter>.broadcast();
+  StreamController<Filter> _filterController = StreamController<Filter>.broadcast();
 
   Stream<Filter> get filter => _filterController.stream;
 

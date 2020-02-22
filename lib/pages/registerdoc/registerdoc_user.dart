@@ -222,13 +222,14 @@ class DropDownState extends State<RegisterDocUser> {
               color: Colors.white,
             ),
             onPressed: () async {
-              if (_formState.currentState.validate()) {
-                _formState.currentState.save();
+              //if (_formState.currentState.validate()) {
+               // _formState.currentState.save();
 
                 var intro = Intro.create(
                     1,1,"PO", "Tiêu đề giới hiệu", "Mô tả công ty", "2019/1/1", "2019/2/2"        );
                 print(intro.description);
-                introBloc.checkIfIntroExist(intro);
+
+                //introBloc.checkIfIntroExist(intro);
 
                 showDialog(
                     context: context,
@@ -247,7 +248,7 @@ class DropDownState extends State<RegisterDocUser> {
                     )
                 );
 
-              }
+              //}
 
             }),
         body: Container(

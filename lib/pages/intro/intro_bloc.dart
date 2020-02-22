@@ -15,6 +15,9 @@ class IntroBloc implements BlocBase {
   StreamController<ColorPalette> _colorController = StreamController<ColorPalette>.broadcast();
   Stream<ColorPalette> get colorSelection => _colorController.stream;
 
+  StreamController<String> _introidController = StreamController<String>.broadcast();
+  Stream<String> get introid => _introidController.stream;
+
   final IntroDB _introDB;
 
 
@@ -27,6 +30,14 @@ class IntroBloc implements BlocBase {
     _introController.close();
     _introExistController.close();
     _colorController.close();
+    _introidController.close();
+  }
+
+  void updateTitle(String title) {
+    _introidController.sink.add(title);
+  }
+  void applyFilter(String title) {
+    updateTitle(title);
   }
 
   void _loadIntro() {
@@ -46,6 +57,12 @@ class IntroBloc implements BlocBase {
   void checkIfIntroExist(Intro intro) async {
     _introDB.isIntroExits(intro).then((isExist) {
       _introExistController.sink.add(isExist);
+    });
+  }
+
+  void listIntrolId(Intro intro)  async {
+    _introDB.getIntroId(intro).then((isExist) {
+
     });
   }
 

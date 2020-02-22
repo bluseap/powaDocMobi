@@ -191,6 +191,18 @@ class AppDatabase {
           "${Intro.dbCreateDate} TEXT,"
           "${Intro.dbUpdateDate} TEXT );"
       );
+
+      txn.rawInsert('INSERT INTO '
+          '${Intro.tblIntro} ( ${Intro.dbId}, ${Intro.dbCorporationId}, ${Intro.dbCorporationName}, ${Intro.dbTitle},'
+          ' ${Intro.dbDescription}, ${Intro.dbCreateDate}, ${Intro.dbUpdateDate} )'
+          ' VALUES ( 1, 1, "POWACO", "Giới thiệu chung",'
+          ' "Công ty cổ phần Điện Nước An Giang là Doanh Nghiệp hoạt động sản xuất kinh doanh với nhiều lĩnh vực. Trong đó sản phẩm chính là cung cấp điện - nước sạch cho người dân các khu vực thành thị lẫn nông thôn trên địa bàn tỉnh An Giang. Đây là doanh nghiệp duy nhất trên cả nước, kinh doanh và phục vụ các nhu cầu cần thiết trong đời sống sinh hoạt của người dân trên lĩnh vực điện sinh hoạt - nước sạch.'
+          '\n\nCông ty CP Điện Nước An Giang là đơn vị hạch toán độc lập theo quyết định số 1424/QĐ-UBND ngày 04/08/2010 của UBND Tỉnh An Giang.'
+          '\n\nTên tiếng việt: CÔNG TY CỔ PHẨN ĐIỆN NƯỚC AN GIANG.'
+          '\n\nTên tiếng Anh: AN GIANG POWER AND WATER SUPPLY JOINT STOCK COMPANY.'
+          '\n\nTên viết tắt: POWACO. ", "2019/02/20", "2019/02/20" )'
+      );
+
     });
   }
 

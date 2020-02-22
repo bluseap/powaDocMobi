@@ -8,6 +8,7 @@ import 'package:powa_doc/pages/tasks/bloc/task_bloc.dart';
 import 'package:powa_doc/pages/intro/intro_db.dart';
 import 'package:powa_doc/pages/intro/intro.dart';
 import 'package:powa_doc/pages/intro/intro_bloc.dart';
+import 'package:powa_doc/pages/intro/IntroDetailsPage.dart';
 
 
 class IntroPage extends StatelessWidget {
@@ -58,11 +59,22 @@ class IntroRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    HomeBloc homeBloc = BlocProvider.of(context);
+    IntroBloc introBloc = BlocProvider.of(context);
     return ListTile(
       onTap: () {
-        homeBloc.applyFilter(" ${intro.title}", Filter.byLabel(intro.title));
-        Navigator.pop(context);
+        introBloc.applyFilter("${intro.id}");
+        print("id:" + "${intro.id}");
+        var blocLabelProvider = BlocProvider(
+          bloc: IntroBloc(IntroDB.get()),
+          child: IntroDetailsPage(intro: intro),
+        );
+        Navigator.push(context, MaterialPageRoute<bool>(builder: (context) => blocLabelProvider));
+        /*var blocLabelProvider = BlocProvider(
+          bloc: IntroBloc(IntroDB.get()),
+          child: RegisterDocUser(),
+        );
+        await Navigator.push(context,
+            MaterialPageRoute<bool>(builder: (context) => blocLabelProvider));*/
       },
       leading: Container(
         width: 24.0,
