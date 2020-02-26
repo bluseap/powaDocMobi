@@ -15,6 +15,12 @@ class ProductBloc implements BlocBase {
   StreamController<ColorPalette> _colorController = StreamController<ColorPalette>.broadcast();
   Stream<ColorPalette> get colorSelection => _colorController.stream;
 
+  StreamController<Product> _product2Controller = StreamController<Product>.broadcast();
+  Stream<Product> get product2 => _product2Controller.stream;
+
+  StreamController<String> _productidController = StreamController<String>.broadcast();
+  Stream<String> get productid => _productidController.stream;
+
   final ProductDB _productDB;
 
 
@@ -27,6 +33,20 @@ class ProductBloc implements BlocBase {
     _productController.close();
     _productExistController.close();
     _colorController.close();
+    _productidController.close();
+    _product2Controller.close();
+  }
+
+  void updateTitle(String title) {
+    _productidController.sink.add(title);
+  }
+  void applyFilter(String title) {
+    updateTitle(title);
+  }
+  void getProductId2(Product product)  async {
+    _productDB.getProductId2(product).then((isExist) {
+      _product2Controller.sink.add(product);
+    });
   }
 
   void _loadProduct() {

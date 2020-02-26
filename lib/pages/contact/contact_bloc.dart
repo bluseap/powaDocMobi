@@ -15,6 +15,12 @@ class ContactBloc implements BlocBase {
   StreamController<ColorPalette> _colorController = StreamController<ColorPalette>.broadcast();
   Stream<ColorPalette> get colorSelection => _colorController.stream;
 
+  StreamController<Contact> _contact2Controller = StreamController<Contact>.broadcast();
+  Stream<Contact> get contact2 => _contact2Controller.stream;
+
+  StreamController<String> _contactidController = StreamController<String>.broadcast();
+  Stream<String> get contactid => _contactidController.stream;
+
   final ContactDB _contactDB;
 
 
@@ -27,6 +33,20 @@ class ContactBloc implements BlocBase {
     _contactController.close();
     _contactExistController.close();
     _colorController.close();
+    _contactidController.close();
+    _contact2Controller.close();
+  }
+
+  void updateTitle(String title) {
+    _contactidController.sink.add(title);
+  }
+  void applyFilter(String title) {
+    updateTitle(title);
+  }
+  void getContactId2(Contact contact)  async {
+    _contactDB.getContactId2(contact).then((isExist) {
+      _contact2Controller.sink.add(contact);
+    });
   }
 
   void _loadContact() {

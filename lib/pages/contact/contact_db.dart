@@ -26,6 +26,18 @@ class ContactDB {
     return projects;
   }
 
+  Future<Contact> getContactId2(Contact contact) async {
+    var db = await _appDatabase.getDb();
+    var result = await db.rawQuery('SELECT * FROM ${Contact.tblContact} WHERE ${Contact.dbId} = ${contact.id}');
+
+    Contact projects =  new Contact();
+    for (Map<String, dynamic> item in result) {
+      var myProject = Contact.fromMap(item);
+      projects = myProject;
+    }
+    return projects;
+  }
+
   Future insertContact(String name) async {
     var db = await _appDatabase.getDb();
     await db.transaction((Transaction txn) async {

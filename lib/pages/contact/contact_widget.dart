@@ -8,6 +8,7 @@ import 'package:powa_doc/pages/tasks/bloc/task_bloc.dart';
 import 'package:powa_doc/pages/contact/contact_db.dart';
 import 'package:powa_doc/pages/contact/contact.dart';
 import 'package:powa_doc/pages/contact/contact_bloc.dart';
+import 'package:powa_doc/pages/contact/contact_details_page.dart';
 
 
 class ContactPage extends StatelessWidget {
@@ -58,11 +59,16 @@ class ContactRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    HomeBloc homeBloc = BlocProvider.of(context);
+    ContactBloc contactBloc = BlocProvider.of(context);
+
     return ListTile(
       onTap: () {
-        homeBloc.applyFilter(" ${contact.title}", Filter.byLabel(contact.title));
-        Navigator.pop(context);
+        contactBloc.getContactId2(contact);
+        var blocLabelProvider = BlocProvider(
+          bloc: ContactBloc(ContactDB.get()),
+          child: ContactDetailsPage(contact: contact),
+        );
+        Navigator.push(context, MaterialPageRoute<bool>(builder: (context) => blocLabelProvider));
       },
       leading: Container(
         width: 24.0,

@@ -26,6 +26,18 @@ class ProductDB {
     return projects;
   }
 
+  Future<Product> getProductId2(Product product) async {
+    var db = await _appDatabase.getDb();
+    var result = await db.rawQuery('SELECT * FROM ${Product.tblProduct} WHERE ${Product.dbId} = ${product.id}');
+
+    Product projects =  new Product();
+    for (Map<String, dynamic> item in result) {
+      var myProject = Product.fromMap(item);
+      projects = myProject;
+    }
+    return projects;
+  }
+
   Future insertNews(String name) async {
     var db = await _appDatabase.getDb();
     await db.transaction((Transaction txn) async {

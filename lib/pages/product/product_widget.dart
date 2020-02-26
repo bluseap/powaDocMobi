@@ -8,7 +8,7 @@ import 'package:powa_doc/pages/tasks/bloc/task_bloc.dart';
 import 'package:powa_doc/pages/product/product_db.dart';
 import 'package:powa_doc/pages/product/product.dart';
 import 'package:powa_doc/pages/product/product_bloc.dart';
-
+import 'package:powa_doc/pages/product/product_details_page.dart';
 
 class ProductPage extends StatelessWidget {
   @override
@@ -58,11 +58,16 @@ class ProductRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    HomeBloc homeBloc = BlocProvider.of(context);
+    ProductBloc productBloc = BlocProvider.of(context);
+
     return ListTile(
       onTap: () {
-        homeBloc.applyFilter(" ${product.title}", Filter.byLabel(product.title));
-        Navigator.pop(context);
+        productBloc.getProductId2(product);
+        var blocLabelProvider = BlocProvider(
+          bloc: ProductBloc(ProductDB.get()),
+          child: ProductDetailsPage(product: product),
+        );
+        Navigator.push(context, MaterialPageRoute<bool>(builder: (context) => blocLabelProvider));
       },
       leading: Container(
         width: 24.0,

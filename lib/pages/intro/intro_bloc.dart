@@ -9,6 +9,9 @@ class IntroBloc implements BlocBase {
   StreamController<List<Intro>> _introController = StreamController<List<Intro>>.broadcast();
   Stream<List<Intro>> get intro => _introController.stream;
 
+  StreamController<Intro> _intro2Controller = StreamController<Intro>.broadcast();
+  Stream<Intro> get intro2 => _intro2Controller.stream;
+
   StreamController<bool> _introExistController = StreamController<bool>.broadcast();
   Stream<bool> get introExist => _introExistController.stream;
 
@@ -17,6 +20,8 @@ class IntroBloc implements BlocBase {
 
   StreamController<String> _introidController = StreamController<String>.broadcast();
   Stream<String> get introid => _introidController.stream;
+
+
 
   final IntroDB _introDB;
 
@@ -31,6 +36,7 @@ class IntroBloc implements BlocBase {
     _introExistController.close();
     _colorController.close();
     _introidController.close();
+    _intro2Controller.close();
   }
 
   void updateTitle(String title) {
@@ -38,6 +44,12 @@ class IntroBloc implements BlocBase {
   }
   void applyFilter(String title) {
     updateTitle(title);
+  }
+
+  void getIntrolId2(Intro intro)  async {
+    _introDB.getIntroId2(intro).then((isExist) {
+      _intro2Controller.sink.add(intro);
+    });
   }
 
   void _loadIntro() {

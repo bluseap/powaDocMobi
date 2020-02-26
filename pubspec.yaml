@@ -62,6 +62,7 @@ flutter:
     - assets/
     - assets/event_images/
     - assets/guest_images/
+    - assets/powaco/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

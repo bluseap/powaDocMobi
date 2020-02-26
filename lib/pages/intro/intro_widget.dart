@@ -62,19 +62,16 @@ class IntroRow extends StatelessWidget {
     IntroBloc introBloc = BlocProvider.of(context);
     return ListTile(
       onTap: () {
-        introBloc.applyFilter("${intro.id}");
-        print("id:" + "${intro.id}");
+
+        //introBloc.applyFilter("${intro.id}");
+        introBloc.getIntrolId2(intro);
+        //print("id:" + "${intro.id}");
         var blocLabelProvider = BlocProvider(
           bloc: IntroBloc(IntroDB.get()),
           child: IntroDetailsPage(intro: intro),
         );
         Navigator.push(context, MaterialPageRoute<bool>(builder: (context) => blocLabelProvider));
-        /*var blocLabelProvider = BlocProvider(
-          bloc: IntroBloc(IntroDB.get()),
-          child: RegisterDocUser(),
-        );
-        await Navigator.push(context,
-            MaterialPageRoute<bool>(builder: (context) => blocLabelProvider));*/
+
       },
       leading: Container(
         width: 24.0,
