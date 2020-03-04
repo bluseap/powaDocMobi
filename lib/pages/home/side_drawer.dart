@@ -65,13 +65,13 @@ class SideDrawer extends StatelessWidget {
             ),
           ),
           BlocProvider(
-            bloc: IntroBloc(IntroDB.get()),
-            child: IntroPage()
+              bloc: IntroBloc(IntroDB.get()),
+              child: IntroPage()
           ),
-          BlocProvider(
+          /*BlocProvider(
               bloc: NewsBloc(NewsDB.get()),
               child: NewsPage()
-          ),
+          ),*/
           BlocProvider(
               bloc: ProductBloc(ProductDB.get()),
               child: ProductPage()

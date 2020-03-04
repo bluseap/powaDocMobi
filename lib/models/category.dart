@@ -20,11 +20,11 @@ final introCategory = Category(
   name: "Giới thiệu",
   icon: Icons.turned_in_not,
 );
-final newsCategory = Category(
+/*final newsCategory = Category(
   categoryId: 2,
   name: "Tin tức",
   icon: Icons.image_aspect_ratio,
-);
+);*/
 final productCategory = Category(
   categoryId: 3,
   name: "Sản phẩm",
@@ -44,7 +44,7 @@ final contactCategory = Category(
 final categories = [
   //allCategory,
   introCategory,
-  newsCategory,
+  //newsCategory,
   productCategory,
   customerCategory,
   contactCategory

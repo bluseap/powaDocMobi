@@ -32,7 +32,23 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:powa_doc/bloc/bloc_provider.dart';
 import 'package:powa_doc/pages/intro/intro_bloc.dart';
 import 'package:powa_doc/pages/intro/intro_db.dart';
+import 'package:powa_doc/pages/intro/intro.dart';
+import 'package:powa_doc/pages/home/home_intro_widget.dart';
 
+import 'package:powa_doc/pages/product/product_bloc.dart';
+import 'package:powa_doc/pages/product/product_db.dart';
+import 'package:powa_doc/pages/product/product.dart';
+import 'package:powa_doc/pages/home/home_product_widget.dart';
+
+import 'package:powa_doc/pages/customer/customer_bloc.dart';
+import 'package:powa_doc/pages/customer/customer_db.dart';
+import 'package:powa_doc/pages/customer/customer.dart';
+import 'package:powa_doc/pages/home/home_customer_widget.dart';
+
+import 'package:powa_doc/pages/contact/contact_bloc.dart';
+import 'package:powa_doc/pages/contact/contact_db.dart';
+import 'package:powa_doc/pages/contact/contact.dart';
+import 'package:powa_doc/pages/home/home_contact_widget.dart';
 
 class HomePage extends StatelessWidget {
   //final TaskBloc _taskBloc = TaskBloc(TaskDB.get());
@@ -97,6 +113,11 @@ class HomePage extends StatelessWidget {
         },
       );
     }
+
+    Intro intro;
+    Product product;
+    Customer customer;
+    Contact contact;
 
     /*homeBloc.filter.listen((filter) {
       _taskBloc.updateFilters(filter);
@@ -177,9 +198,35 @@ class HomePage extends StatelessWidget {
                       child: Consumer<AppState>(
                         builder: (context, appState, _) => Column(
                           children: <Widget>[
-                            for (final event in events.where((e) => e.categoryIds.contains(appState.selectedCategoryId)))
+                            if (appState.selectedCategoryId.toString() == "1")
+                              BlocProvider(
+                                  bloc: IntroBloc(IntroDB.get()),
+                                  child: HomeIntroWidget()
+                              ),
+
+                            if (appState.selectedCategoryId.toString() == "3")
+                              BlocProvider(
+                                  bloc: ProductBloc(ProductDB.get()),
+                                  child: HomeProductWidget()
+                              ),
+
+                            if (appState.selectedCategoryId.toString() == "4")
+                              BlocProvider(
+                                  bloc: CustomerBloc(CustomerDB.get()),
+                                  child: HomeCustomerWidget()
+                              ),
+
+                            if (appState.selectedCategoryId.toString() == "5")
+                              BlocProvider(
+                                  bloc: ContactBloc(ContactDB.get()),
+                                  child: HomeContactWidget()
+                              )
+
+
+                            /*for (final event in events.where((e) => e.categoryIds.contains(appState.selectedCategoryId)))
                               GestureDetector(
                                 onTap: () {
+                                  //print(appState.selectedCategoryId.toString());
                                   Navigator.of(context).push(
                                     MaterialPageRoute(
                                       builder: (context) => EventDetailsPage(event: event),
@@ -189,7 +236,7 @@ class HomePage extends StatelessWidget {
                                 child: EventWidget(
                                   event: event,
                                 ),
-                              )
+                              )*/
 
                           ],
                         ),
