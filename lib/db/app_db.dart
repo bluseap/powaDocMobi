@@ -342,7 +342,7 @@ class AppDatabase {
       txn.rawInsert('INSERT INTO '
           '${Contact.tblContact} ( ${Contact.dbId}, ${Contact.dbCorporationId}, ${Contact.dbCorporationName}, ${Contact.dbTitle},'
           ' ${Contact.dbImage}, ${Contact.dbDescription}, ${Contact.dbCreateDate}, ${Contact.dbUpdateDate} )'
-          ' VALUES ( 7, 1, "POWACO", "Liên hệ",'
+          ' VALUES ( 8, 1, "POWACO", "Liên hệ",'
           ' "assets/powaco/guest1.png", "Công ty Cổ phần Điện nước An Giang'
           '\nEmail: ctydn_ag@gmail.com, ctycpdn.ag@gmail.com'
           '\nSố điện thoại: 0296.3856100.'

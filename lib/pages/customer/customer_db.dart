@@ -15,6 +15,18 @@ class CustomerDB {
     return _customerDb;
   }
 
+  Future<Customer> getCustomerId2(Customer customer) async {
+    var db = await _appDatabase.getDb();
+    var result = await db.rawQuery('SELECT * FROM ${Customer.tblCustomer} WHERE ${Customer.dbId} = ${customer.id}');
+
+    Customer projects =  new Customer();
+    for (Map<String, dynamic> item in result) {
+      var myProject = Customer.fromMap(item);
+      projects = myProject;
+    }
+    return projects;
+  }
+
   Future<List<Customer>> getCustomer() async {
     var db = await _appDatabase.getDb();
     var result = await db.rawQuery('SELECT * FROM ${Customer.tblCustomer}');

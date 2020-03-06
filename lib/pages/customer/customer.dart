@@ -45,15 +45,60 @@ class Customer {
     );
   }
 
-  Customer.update({title = ""}) {
+  Customer.update({this.id, this.corporationId, corporationName = "", thumbnail = "", image="",  createdateIntro="",
+    publishedDateIntro = "", source="", title = "", contents="", description="", createDate="", updateDate=""  }) {
+
+    if (corporationName != "") {
+      this.corporationName = corporationName;
+    }
+    if (thumbnail != "") {
+      this.thumbnail = thumbnail;
+    }
+    if (image != "") {
+      this.image = image;
+    }
+    if (createdateIntro != "") {
+      this.createdateIntro = createdateIntro;
+    }
+    if (publishedDateIntro != "") {
+      this.publishedDateIntro = publishedDateIntro;
+    }
+    if (source != "") {
+      this.source = source;
+    }
     if (title != "") {
       this.title = title;
     }
+    if (contents != "") {
+      this.contents = contents;
+    }
+    if (description != "") {
+      this.description = description;
+    }
+    if (createDate != "") {
+      this.createDate = createDate;
+    }
+    if (updateDate != "") {
+      this.updateDate = updateDate;
+    }
+
   }
 
   Customer.fromMap(Map<String, dynamic> map)
       : this.update(
-      title: map[dbTitle]
+      id: map[dbId],
+      corporationId: map[dbCorporationId],
+      corporationName: map[dbCorporationName],
+      thumbnail: map[dbThumbnail],
+      image: map[dbImage],
+      createdateIntro: map[dbCreatedDateIntro],
+      publishedDateIntro: map[dbPublishedDateIntro],
+      source: map[dbSource],
+      title: map[dbTitle],
+      contents: map[dbContents],
+      description: map[dbDescription],
+      createDate: map[dbCreateDate],
+      updateDate: map[dbUpdateDate]
   );
 
 

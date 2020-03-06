@@ -8,7 +8,9 @@ import 'package:powa_doc/pages/tasks/bloc/task_bloc.dart';
 import 'package:powa_doc/pages/product/product_db.dart';
 import 'package:powa_doc/pages/product/product.dart';
 import 'package:powa_doc/pages/product/product_bloc.dart';
-import 'package:powa_doc/pages/product/product_details_content.dart';
+import 'package:powa_doc/pages/product/product_details_page.dart';
+
+
 
 class HomeProductWidget extends StatelessWidget {
   @override
@@ -68,75 +70,90 @@ class ProductRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final ProductBloc productBloc = BlocProvider.of(context);
+    ProductDB productDB;
 
     return Card(
         margin: const EdgeInsets.symmetric(vertical: 20),
         elevation: 4,
         color: Colors.white,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(24))),
-        child: Padding(
-          padding: const EdgeInsets.all(20),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: <Widget>[
-              ClipRRect(
-                borderRadius: BorderRadius.all(
-                  Radius.circular(30),
+        child: InkWell(
+          splashColor: Colors.blue.withAlpha(30),
+          onTap: () {
+            productBloc.getProductId2(product);
+            //print("Id:" + intro.id.toString());
+            var blocLabelProvider = BlocProvider(
+              bloc: ProductBloc(ProductDB.get()),
+              child: ProductDetailsPage(product: product),
+            );
+            Navigator.push(context, MaterialPageRoute<bool>(builder:
+              (context) => blocLabelProvider));
+          },
+          child: Padding(
+            padding: const EdgeInsets.all(20),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: <Widget>[
+                ClipRRect(
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(30),
+                  ),
+                  child: Image.asset(
+                    product.image,
+                    height: 150,
+                    fit: BoxFit.fitWidth,
+                  ),
                 ),
-                child: Image.asset(
-                  product.image,
-                  height: 150,
-                  fit: BoxFit.fitWidth,
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(top: 8.0, left: 8.0),
-                child: Row(
-                  children: <Widget>[
-                    Expanded(
-                      flex: 3,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          Text(
-                            product.title,
-                            //style: eventTitleTextStyle,
-                          ),
-                          SizedBox(
-                            height: 10,
-                          ),
-                          FittedBox(
-                            child: Row(
-                              children: <Widget>[
-                                Icon(Icons.location_on),
-                                SizedBox(
-                                  width: 5,
-                                ),
-                                Text(
-                                  "Long Xuyên",
-                                  //style: eventLocationTextStyle,
-                                ),
-                              ],
+                Padding(
+                  padding: const EdgeInsets.only(top: 8.0, left: 8.0),
+                  child: Row(
+                    children: <Widget>[
+                      Expanded(
+                        flex: 3,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                            Text(
+                              product.title,
+                              //style: eventTitleTextStyle,
                             ),
-                          ),
-                        ],
+                            SizedBox(
+                              height: 10,
+                            ),
+                            FittedBox(
+                              child: Row(
+                                children: <Widget>[
+                                  Icon(Icons.location_on),
+                                  SizedBox(
+                                    width: 5,
+                                  ),
+                                  Text(
+                                    "Long Xuyên",
+                                    //style: eventLocationTextStyle,
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
-                    ),
-                    Expanded(
-                      flex: 1,
-                      child: Text(
-                        "An Giang",
-                        textAlign: TextAlign.right,
-                        //style: eventLocationTextStyle.copyWith(                  fontWeight: FontWeight.w900,
+                      Expanded(
+                        flex: 1,
+                        child: Text(
+                          "An Giang",
+                          textAlign: TextAlign.right,
+                          //style: eventLocationTextStyle.copyWith(                  fontWeight: FontWeight.w900,
+                        ),
                       ),
-                    ),
 
-                  ],
+                    ],
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
-        )
+        ),
     );
   }
 

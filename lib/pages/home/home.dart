@@ -33,6 +33,7 @@ import 'package:powa_doc/bloc/bloc_provider.dart';
 import 'package:powa_doc/pages/intro/intro_bloc.dart';
 import 'package:powa_doc/pages/intro/intro_db.dart';
 import 'package:powa_doc/pages/intro/intro.dart';
+import 'package:powa_doc/pages/intro/IntroDetailsPage.dart';
 import 'package:powa_doc/pages/home/home_intro_widget.dart';
 
 import 'package:powa_doc/pages/product/product_bloc.dart';
@@ -50,6 +51,8 @@ import 'package:powa_doc/pages/contact/contact_db.dart';
 import 'package:powa_doc/pages/contact/contact.dart';
 import 'package:powa_doc/pages/home/home_contact_widget.dart';
 
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+
 class HomePage extends StatelessWidget {
   //final TaskBloc _taskBloc = TaskBloc(TaskDB.get());
   final GlobalKey<FormState> _formState = GlobalKey<FormState>();
@@ -60,10 +63,14 @@ class HomePage extends StatelessWidget {
 
   String _message = '';
   final FirebaseMessaging _firebaseMessaging = FirebaseMessaging();
+
+  FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin;
+
   @override
   void initState() {
     getMessage();
   }
+
   void getMessage(){
     _firebaseMessaging.configure(
         onMessage: (Map<String, dynamic> message) async {
@@ -82,9 +89,37 @@ class HomePage extends StatelessWidget {
 
         }
     );
+
+    _firebaseMessaging.requestNotificationPermissions(
+        const IosNotificationSettings(
+            sound: true, badge: true, alert: true, provisional: true));
+    _firebaseMessaging.onIosSettingsRegistered
+        .listen((IosNotificationSettings settings) {
+      print("Settings registered: $settings");
+    });
+    /*_firebaseMessaging.getToken().then((String token) {
+      assert(token != null);
+      print("Push Messaging token: $token");
+    });*/
+    _firebaseMessaging.subscribeToTopic("matchscore");
+
+  /*  var initializationSettingsAndroid =  new AndroidInitializationSettings('app_icon');
+    var initializationSettingsIOS = new IOSInitializationSettings();
+    var initializationSettings = new InitializationSettings(initializationSettingsAndroid, initializationSettingsIOS);
+    flutterLocalNotificationsPlugin = new FlutterLocalNotificationsPlugin();
+    flutterLocalNotificationsPlugin.initialize(initializationSettings, onSelectNotification: onSelectNotification);
+*/
   }
 
-
+  Future onSelectNotification(String payload) async {
+    if (payload != null) {
+      debugPrint('notification payload: ' + payload);
+    }
+   /* await Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => SecondScreen(payload)),
+    );*/
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -119,6 +154,7 @@ class HomePage extends StatelessWidget {
     Customer customer;
     Contact contact;
 
+   // IntroBloc introBloc = BlocProvider.of(context);
     /*homeBloc.filter.listen((filter) {
       _taskBloc.updateFilters(filter);
     });*/
@@ -271,6 +307,7 @@ class HomePage extends StatelessWidget {
       )*/
 
     );
+
   }
 
 // This menu button widget updates a _selection field (of type WhyFarther,

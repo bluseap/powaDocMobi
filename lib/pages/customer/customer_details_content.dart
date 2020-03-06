@@ -7,11 +7,11 @@ import 'package:powa_doc/pages/customer/customer_bloc.dart';
 import '../../models/guest.dart';
 import 'package:powa_doc/utils/styleguide.dart';
 
-class ProductDetailsContent extends StatelessWidget {
+class CustomerDetailsContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final intro = Provider.of<Customer>(context);
+    final customer = Provider.of<Customer>(context);
     final screenWidth = MediaQuery.of(context).size.width;
 
     return SingleChildScrollView(
@@ -24,7 +24,7 @@ class ProductDetailsContent extends StatelessWidget {
           Padding(
             padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.2),
             child: Text(
-              intro.title,
+              customer.title,
               style: eventWhiteTitleTextStyle,
             ),
           ),
@@ -52,7 +52,7 @@ class ProductDetailsContent extends StatelessWidget {
                     width: 5,
                   ),
                   Text(
-                    intro.title,
+                    customer.title,
                     style: eventLocationTextStyle.copyWith(color: Colors.white, fontWeight: FontWeight.w700),
                   ),
                 ],
@@ -93,16 +93,16 @@ class ProductDetailsContent extends StatelessWidget {
             child: RichText(
               text: TextSpan(
                   children: [
-                    TextSpan(text: intro.title, style: punchLine1TextStyle,),
+                    TextSpan(text: customer.title, style: punchLine1TextStyle,),
                     //TextSpan(text: intro.title, style: punchLine2TextStyle,),
                   ]
               ),
             ),
           ),
-          if (intro.description.isNotEmpty)
+          if (customer.description.isNotEmpty)
             Padding(
               padding: const EdgeInsets.all(16),
-              child: Text(intro.description, style: eventLocationTextStyle,),
+              child: Text(customer.description, style: eventLocationTextStyle,),
             ),
 
 

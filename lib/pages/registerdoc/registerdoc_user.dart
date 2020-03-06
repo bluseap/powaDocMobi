@@ -48,7 +48,7 @@ class DropDownState extends State<RegisterDocUser> {
   final txtUserName = TextEditingController();
   final txtPass = TextEditingController();
 
-  static var uri = "http://192.168.1.19:88";
+  static var uri = "http://powaco.ddns.net:85";
   static BaseOptions options = BaseOptions(
       baseUrl: uri,
       responseType: ResponseType.plain,
@@ -427,7 +427,7 @@ class DropDownState extends State<RegisterDocUser> {
 
 
 Future<List<RegisterDoc>> fetchRegisterDoc(http.Client client) async {
-  final response =  await client.get('http://192.168.1.19:88/api/vi-VN/categorynews/1');
+  final response =  await client.get('http://powaco.ddns.net:85/api/vi-VN/categorynews/1');
   // Use the compute function to run parsePhotos in a separate isolate.
   return compute(parseRegisterDoc, response.body);
 }

@@ -42,8 +42,8 @@ class SideDrawer extends StatelessWidget {
         padding: EdgeInsets.all(0.0),
         children: <Widget>[
           UserAccountsDrawerHeader(
-            accountName: Text("Burhanuddin Rashid"),
-            accountEmail: Text("burhanrashid5253@gmail.com"),
+            accountName: Text("Công ty CP Điện Nước AG"),
+            accountEmail: Text("ctydn_ag@yahoo.com.vn"),
             otherAccountsPictures: <Widget>[
               IconButton(
                   icon: Icon(
@@ -61,7 +61,7 @@ class SideDrawer extends StatelessWidget {
             ],
             currentAccountPicture: CircleAvatar(
               backgroundColor: Theme.of(context).accentColor,
-              backgroundImage: AssetImage("assets/profile_pic.jpg"),
+              backgroundImage: AssetImage("assets/logoPOWA.png"),
             ),
           ),
           BlocProvider(
