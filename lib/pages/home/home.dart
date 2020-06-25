@@ -2,17 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:powa_doc/bloc/bloc_provider.dart';
 import 'package:powa_doc/pages/home/home_bloc.dart';
 import 'package:powa_doc/pages/home/side_drawer.dart';
-import 'package:powa_doc/models/category.dart';
-import 'package:powa_doc/models/event.dart';
-import 'package:powa_doc/models/guest.dart';
-import 'package:powa_doc/utils/styleguide.dart';
-import 'package:powa_doc/pages/event_details/event_details_page.dart';
 import 'package:provider/provider.dart';
-import 'package:powa_doc/models/event.dart';
 
 import 'package:powa_doc/app_state.dart';
-import 'category_widget.dart';
-import 'event_widget.dart';
 import 'home_page_background.dart';
 
 import 'dart:async';
@@ -20,10 +12,8 @@ import 'dart:convert';
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 import 'package:powa_doc/pages/side/side.dart';
-import 'package:powa_doc/pages/side/side_bloc.dart';
 import 'package:powa_doc/utils/collapsable_expand_tile.dart';
 
-import 'package:powa_doc/utils/app_util.dart';
 import 'package:powa_doc/pages/side/side_db.dart';
 
 import 'package:powa_doc/pages/registerdoc/registerdoc_user.dart';
@@ -33,30 +23,17 @@ import 'package:powa_doc/bloc/bloc_provider.dart';
 import 'package:powa_doc/pages/intro/intro_bloc.dart';
 import 'package:powa_doc/pages/intro/intro_db.dart';
 import 'package:powa_doc/pages/intro/intro.dart';
-import 'package:powa_doc/pages/intro/IntroDetailsPage.dart';
-import 'package:powa_doc/pages/home/home_intro_widget.dart';
 
-import 'package:powa_doc/pages/product/product_bloc.dart';
-import 'package:powa_doc/pages/product/product_db.dart';
 import 'package:powa_doc/pages/product/product.dart';
-import 'package:powa_doc/pages/home/home_product_widget.dart';
 
-import 'package:powa_doc/pages/customer/customer_bloc.dart';
-import 'package:powa_doc/pages/customer/customer_db.dart';
 import 'package:powa_doc/pages/customer/customer.dart';
-import 'package:powa_doc/pages/home/home_customer_widget.dart';
 
-import 'package:powa_doc/pages/contact/contact_bloc.dart';
-import 'package:powa_doc/pages/contact/contact_db.dart';
 import 'package:powa_doc/pages/contact/contact.dart';
-import 'package:powa_doc/pages/home/home_contact_widget.dart';
 
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
 class HomePage extends StatelessWidget {
   //final TaskBloc _taskBloc = TaskBloc(TaskDB.get());
-  final GlobalKey<FormState> _formState = GlobalKey<FormState>();
-  final GlobalKey<ScaffoldState> _scaffoldState = GlobalKey<ScaffoldState>();
   final expansionTile = GlobalKey<CollapsibleExpansionTileState>();
 
   SideDB _sideDB = SideDB.get();

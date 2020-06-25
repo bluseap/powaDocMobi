@@ -29,7 +29,7 @@
 
             <meta-data
                 android:name="io.flutter.embedding.android.SplashScreenDrawable"
-                android:resource="@drawable/ic_stat_name" />
+                android:resource="@mipmap/ic_launcher" />
 
             <!-- Theme to apply as soon as Flutter begins rendering frames -->
 
