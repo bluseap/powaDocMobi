@@ -50,11 +50,7 @@ class AboutUsScreen extends StatelessWidget {
                       subtitle: Text("Powaco"),
                       onTap: () => launchURL(ERROR_URL),
                     ),
-                    /*ListTile(
-                        leading:
-                        Icon(Icons.bug_report, color: Colors.black),
-                        title: Text("Fork on Github"),
-                        onTap: () => launchURL(ERROR_URL)),*/
+                   
                     ListTile(
                         leading: Icon(Icons.email, color: Colors.black),
                         title: Text("Email"),
@@ -63,37 +59,7 @@ class AboutUsScreen extends StatelessWidget {
                   ],
                 ),
               ),
-              /*Card(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Padding(
-                      padding: const EdgeInsets.only(top: 16.0, left: 16.0),
-                      child: Text("Ask Question ?",
-                          style: TextStyle(
-                              color: Colors.black,
-                              fontWeight: FontWeight.bold,
-                              fontSize: FONT_MEDIUM)),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(16.0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: <Widget>[
-                          IconButton(
-                            icon: Image.asset("assets/twitter_logo.png",scale: 8.75,),
-                            onPressed: () => launchURL(ERROR_URL),
-                          ),
-                          IconButton(
-                            icon: Image.asset("assets/facebook_logo.png"),
-                            onPressed: () => launchURL(ERROR_URL),
-                          )
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-              ),*/
+             
               Card(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,

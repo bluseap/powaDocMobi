@@ -41,13 +41,6 @@ class LabelExpansionTileWidget extends StatelessWidget {
     )
     );
 
-
-    /*return ExpansionTile(
-      leading: Icon(Icons.turned_in_not),
-      title: Text("Giới thiệu",
-          style: TextStyle(fontSize: 14.0, fontWeight: FontWeight.bold)),
-      children: buildSide(context),
-    );*/
   }
 
   List<Widget> buildSide(BuildContext context) {

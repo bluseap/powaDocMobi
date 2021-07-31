@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'package:powa_doc/pages/customer/customer.dart';
-import 'customer_details_content.dart';
 
 
 class CustomerDetailsBackground extends StatelessWidget {

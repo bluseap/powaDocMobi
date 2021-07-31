@@ -43,7 +43,7 @@ class CustomerDB {
     await db.transaction((Transaction txn) async {
       await txn.rawInsert('INSERT INTO '
           '${Customer.tblCustomer}( ${Customer.dbTitle} )'
-          ' VALUES ("${name}")'
+          ' VALUES ("$name")'
       );
     });
   }

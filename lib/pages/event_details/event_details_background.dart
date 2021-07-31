@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'package:powa_doc/models/event.dart';
-import 'event_details_content.dart';
 
 
 class EventDetailsBackground extends StatelessWidget {

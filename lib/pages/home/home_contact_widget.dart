@@ -2,8 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'package:powa_doc/bloc/bloc_provider.dart';
-import 'package:powa_doc/pages/home/home_bloc.dart';
-import 'package:powa_doc/pages/tasks/bloc/task_bloc.dart';
 
 import 'package:powa_doc/pages/contact/contact_db.dart';
 import 'package:powa_doc/pages/contact/contact.dart';
@@ -43,13 +41,7 @@ class LabelExpansionTileWidget extends StatelessWidget {
           children: buildSide(context),
         )
     );
-
-    /*return ExpansionTile(
-      leading: Icon(Icons.turned_in_not),
-      title: Text("Giới thiệu",
-          style: TextStyle(fontSize: 14.0, fontWeight: FontWeight.bold)),
-      children: buildSide(context),
-    );*/
+  
   }
 
   List<Widget> buildSide(BuildContext context) {

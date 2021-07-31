@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:powa_doc/models/guest.dart';
 import 'package:provider/provider.dart';
 
 import '../../models/event.dart';
-import '../../models/guest.dart';
 import 'package:powa_doc/utils/styleguide.dart';
 
 class EventDetailsContent extends StatelessWidget {

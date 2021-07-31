@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:powa_doc/models/guest.dart';
 import 'package:provider/provider.dart';
 
 import 'package:powa_doc/pages/product/product.dart';
-import 'package:powa_doc/pages/product/product_bloc.dart';
 
-import '../../models/guest.dart';
 import 'package:powa_doc/utils/styleguide.dart';
 
 class ProductDetailsContent extends StatelessWidget {

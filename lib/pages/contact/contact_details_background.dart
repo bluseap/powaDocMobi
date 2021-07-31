@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'package:powa_doc/pages/contact/contact.dart';
-import 'contact_details_content.dart';
 
 
 class ContactDetailsBackground extends StatelessWidget {

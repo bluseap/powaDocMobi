@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:powa_doc/models/guest.dart';
 import 'package:provider/provider.dart';
 
 import 'package:powa_doc/pages/contact/contact.dart';
-import 'package:powa_doc/pages/contact/contact_bloc.dart';
 
-import '../../models/guest.dart';
 import 'package:powa_doc/utils/styleguide.dart';
 
 class ContactDetailsContent extends StatelessWidget {

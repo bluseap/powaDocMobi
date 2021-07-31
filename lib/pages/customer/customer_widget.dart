@@ -5,7 +5,6 @@ import 'package:powa_doc/bloc/bloc_provider.dart';
 import 'package:powa_doc/pages/home/home_bloc.dart';
 import 'package:powa_doc/pages/tasks/bloc/task_bloc.dart';
 
-import 'package:powa_doc/pages/customer/customer_db.dart';
 import 'package:powa_doc/pages/customer/customer.dart';
 import 'package:powa_doc/pages/customer/customer_bloc.dart';
 

@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:powa_doc/bloc/bloc_provider.dart';
+
 import 'package:powa_doc/pages/tasks/bloc/task_bloc.dart';
 
 import 'package:powa_doc/pages/intro/intro.dart';
@@ -26,10 +27,6 @@ class HomeBloc implements BlocBase {
 
   IntroDB _introDB;
   ProductDB _productDB;
-
-  /*HomeBloc(this._introDB) {
-    _loadIntro();
-  }*/
 
 
   @override

@@ -2,8 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'package:powa_doc/bloc/bloc_provider.dart';
-import 'package:powa_doc/pages/home/home_bloc.dart';
-import 'package:powa_doc/pages/tasks/bloc/task_bloc.dart';
 
 import 'package:powa_doc/pages/contact/contact_db.dart';
 import 'package:powa_doc/pages/contact/contact.dart';

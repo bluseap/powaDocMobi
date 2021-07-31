@@ -5,7 +5,7 @@ import 'package:powa_doc/pages/intro/intro.dart';
 import 'package:powa_doc/pages/intro/intro_bloc.dart';
 
 /*import '../../models/event.dart';*/
-import '../../models/guest.dart';
+import 'package:powa_doc/models/guest.dart';
 import 'package:powa_doc/utils/styleguide.dart';
 
 class IntroDetailsContent extends StatelessWidget {

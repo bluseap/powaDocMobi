@@ -1,15 +1,15 @@
 import 'dart:async';
 import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:powa_doc/pages/labels/label.dart';
-import 'package:powa_doc/pages/projects/project.dart';
-import 'package:powa_doc/pages/tasks/models/task_labels.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path_provider/path_provider.dart';
+
+import 'package:powa_doc/pages/labels/label.dart';
+import 'package:powa_doc/pages/projects/project.dart';
+import 'package:powa_doc/pages/tasks/models/task_labels.dart';
 import 'package:powa_doc/pages/tasks/models/tasks.dart';
 import 'package:powa_doc/pages/side/side.dart';
-
 import 'package:powa_doc/pages/intro/intro.dart';
 import 'package:powa_doc/pages/news/news.dart';
 import 'package:powa_doc/pages/product/product.dart';
@@ -24,7 +24,7 @@ class AppDatabase {
   //private internal constructor to make it singleton
   AppDatabase._internal();
 
-  Database _database ;
+  Database _database;
 
   static AppDatabase get() {
     return _appDatabase;
@@ -39,34 +39,34 @@ class AppDatabase {
     return _database;
   }
 
-
+  // ignore: missing_return
   Future insertDb(Intro intro) {
     print(intro.title);
     //_initInsertTable(intro);
   }
+
+  // ignore: unused_element
   Future _initInsertTable(Intro intro) async {
     // Get a location using path_provider
     Directory documentsDirectory = await getApplicationDocumentsDirectory();
-    String path = join(documentsDirectory.path, "tasks.db");
+    String path = join(documentsDirectory.path, "pomobi.db");
     _database = await openDatabase(path, version: 1,
-          onUpgrade: (Database db, int oldVersion, int newVersion) async {
-            await db.execute("DROP TABLE ${Intro.tblIntro}");
-            await _insertIntro(db, intro);
-        }
-     );
+        onUpgrade: (Database db, int oldVersion, int newVersion) async {
+      await db.execute("DROP TABLE ${Intro.tblIntro}");
+      await _insertIntro(db, intro);
+    });
     didInit = true;
   }
+
   Future _insertIntro(Database db, Intro intro) {
     return db.transaction((Transaction txn) async {
       txn.rawInsert('INSERT INTO '
           '${Intro.tblIntro} ( ${Intro.dbId}, ${Intro.dbCorporationId}, ${Intro.dbCorporationName}, ${Intro.dbTitle},'
           ' ${Intro.dbDescription}, ${Intro.dbCreateDate}, ${Intro.dbUpdateDate} )'
           ' VALUES ( ${intro.id}, ${intro.corporationId}, "${intro.corporationName}", "${intro.title}",'
-          ' "${intro.description}", "${intro.createDate}", "${intro.updateDate}" )'
-      );
+          ' "${intro.description}", "${intro.createDate}", "${intro.updateDate}" )');
     });
   }
-
 
   Future _init() async {
     // Get a location using path_provider
@@ -74,37 +74,37 @@ class AppDatabase {
     String path = join(documentsDirectory.path, "tasks.db");
     _database = await openDatabase(path, version: 1,
         onCreate: (Database db, int version) async {
-          // When creating the db, create the table
-          await _createProjectTable(db);
-          await _createTaskTable(db);
-          await _createLabelTable(db);
-          await _createCategorySide(db);
-          await _createIntro(db);
-          await _createNews(db);
-          await _createProduct(db);
-          await _createCustomer(db);
-          await _createContact(db);
-        }, onUpgrade: (Database db, int oldVersion, int newVersion) async {
-          await db.execute("DROP TABLE ${Tasks.tblTask}");
-          await db.execute("DROP TABLE ${Project.tblProject}");
-          await db.execute("DROP TABLE ${TaskLabels.tblTaskLabel}");
-          await db.execute("DROP TABLE ${Label.tblLabel}");
-          await db.execute("DROP TABLE ${Side.tblCategorySide}");
-          await db.execute("DROP TABLE ${Intro.tblIntro}");
-          await db.execute("DROP TABLE ${News.tblNews}");
-          await db.execute("DROP TABLE ${Product.tblProduct}");
-          await db.execute("DROP TABLE ${Customer.tblCustomer}");
-          await db.execute("DROP TABLE ${Contact.tblContact}");
-          await _createProjectTable(db);
-          await _createTaskTable(db);
-          await _createLabelTable(db);
-          await _createCategorySide(db);
-          await _createIntro(db);
-          await _createNews(db);
-          await _createProduct(db);
-          await _createCustomer(db);
-          await _createContact(db);
-        });
+      // When creating the db, create the table
+      await _createProjectTable(db);
+      await _createTaskTable(db);
+      await _createLabelTable(db);
+      await _createCategorySide(db);
+      await _createIntro(db);
+      await _createNews(db);
+      await _createProduct(db);
+      await _createCustomer(db);
+      await _createContact(db);
+    }, onUpgrade: (Database db, int oldVersion, int newVersion) async {
+      await db.execute("DROP TABLE ${Tasks.tblTask}");
+      await db.execute("DROP TABLE ${Project.tblProject}");
+      await db.execute("DROP TABLE ${TaskLabels.tblTaskLabel}");
+      await db.execute("DROP TABLE ${Label.tblLabel}");
+      await db.execute("DROP TABLE ${Side.tblCategorySide}");
+      await db.execute("DROP TABLE ${Intro.tblIntro}");
+      await db.execute("DROP TABLE ${News.tblNews}");
+      await db.execute("DROP TABLE ${Product.tblProduct}");
+      await db.execute("DROP TABLE ${Customer.tblCustomer}");
+      await db.execute("DROP TABLE ${Contact.tblContact}");
+      await _createProjectTable(db);
+      await _createTaskTable(db);
+      await _createLabelTable(db);
+      await _createCategorySide(db);
+      await _createIntro(db);
+      await _createNews(db);
+      await _createProduct(db);
+      await _createCustomer(db);
+      await _createContact(db);
+    });
     didInit = true;
   }
 
@@ -122,6 +122,7 @@ class AppDatabase {
   }
 
   Future _createLabelTable(Database db) {
+    // ignore: missing_return
     return db.transaction((Transaction txn) {
       txn.execute("CREATE TABLE ${Label.tblLabel} ("
           "${Label.dbId} INTEGER PRIMARY KEY AUTOINCREMENT,"
@@ -152,21 +153,20 @@ class AppDatabase {
   Future _createCategorySide(Database db) {
     return db.transaction((Transaction txn) async {
       txn.execute("CREATE TABLE ${Side.tblCategorySide} ("
-        "${Side.dbId} INTERGER,"
-        "${Side.dbCorporationId} INTERGER,"
-        "${Side.dbCorporationName} TEXT,"
-        "${Side.dbName} TEXT,"
-        "${Side.dbDescription} TEXT,"
-        "${Side.dbParentId} INTERGER,"
-        "${Side.dbSortOrder} INTERGER,"
-        "${Side.dbShowInMenu} NUMERIC,"
-        "${Side.dbShowInHome} NUMERIC,"
-        "${Side.dbThumbnail} TEXT,"
-        "${Side.dbCreateDate} TEXT,"
-        "${Side.dbUpdateDate} TEXT,"
-
-        "${Side.dbColorName} TEXT,"
-        "${Side.dbColorCode} INTEGER );");
+          "${Side.dbId} INTERGER,"
+          "${Side.dbCorporationId} INTERGER,"
+          "${Side.dbCorporationName} TEXT,"
+          "${Side.dbName} TEXT,"
+          "${Side.dbDescription} TEXT,"
+          "${Side.dbParentId} INTERGER,"
+          "${Side.dbSortOrder} INTERGER,"
+          "${Side.dbShowInMenu} NUMERIC,"
+          "${Side.dbShowInHome} NUMERIC,"
+          "${Side.dbThumbnail} TEXT,"
+          "${Side.dbCreateDate} TEXT,"
+          "${Side.dbUpdateDate} TEXT,"
+          "${Side.dbColorName} TEXT,"
+          "${Side.dbColorCode} INTEGER );");
 
       /*txn.rawInsert('INSERT INTO '
         '${Side.tblCategorySide} (${Side.dbName})'
@@ -189,8 +189,7 @@ class AppDatabase {
           "${Intro.dbContents} TEXT,"
           "${Intro.dbDescription} TEXT,"
           "${Intro.dbCreateDate} TEXT,"
-          "${Intro.dbUpdateDate} TEXT );"
-      );
+          "${Intro.dbUpdateDate} TEXT );");
 
       txn.rawInsert('INSERT INTO '
           '${Intro.tblIntro} ( ${Intro.dbId}, ${Intro.dbCorporationId}, ${Intro.dbCorporationName}, ${Intro.dbTitle},'
@@ -200,9 +199,7 @@ class AppDatabase {
           '\n\nCông ty CP Điện Nước An Giang là đơn vị hạch toán độc lập theo quyết định số 1424/QĐ-UBND ngày 04/08/2010 của UBND Tỉnh An Giang.'
           '\n\nTên tiếng việt: CÔNG TY CỔ PHẨN ĐIỆN NƯỚC AN GIANG.'
           '\n\nTên tiếng Anh: AN GIANG POWER AND WATER SUPPLY JOINT STOCK COMPANY.'
-          '\n\nTên viết tắt: POWACO. ", "2019/02/20", "2019/02/20" )'
-      );
-
+          '\n\nTên viết tắt: POWACO. ", "2019/02/20", "2019/02/20" )');
     });
   }
 
@@ -221,8 +218,7 @@ class AppDatabase {
           "${Intro.dbContents} TEXT,"
           "${Intro.dbDescription} TEXT,"
           "${Intro.dbCreateDate} TEXT,"
-          "${Intro.dbUpdateDate} TEXT );"
-      );
+          "${Intro.dbUpdateDate} TEXT );");
     });
   }
 
@@ -241,8 +237,7 @@ class AppDatabase {
           "${Product.dbContents} TEXT,"
           "${Product.dbDescription} TEXT,"
           "${Product.dbCreateDate} TEXT,"
-          "${Product.dbUpdateDate} TEXT );"
-      );
+          "${Product.dbUpdateDate} TEXT );");
 
       txn.rawInsert('INSERT INTO '
           '${Product.tblProduct} ( ${Product.dbId}, ${Product.dbCorporationId}, ${Product.dbCorporationName}, ${Product.dbTitle},'
@@ -252,8 +247,7 @@ class AppDatabase {
           '\n\nSản phẩm nước sạch của Công ty luôn đảm bảo đầy đủ theo các tiêu chuẩn quy định.'
           '\n\nThường xuyên tự kiểm tra định kỳ, đột xuất chất lượng nước sạch, thường xuyên kết hợp trung tâm y tế dự phòng Tỉnh kiểm tra kiểm nghiệm chất lượng nước sạch.'
           '\n\nCông ty đang thực hiện việc lắp đặt đồng hồ nước không thu tiền (trong phạm vi 05 mét tính từ hệ thống ống cung cấp nước).'
-          ' ", "2019/02/20", "2019/02/20" )'
-      );
+          ' ", "2019/02/20", "2019/02/20" )');
       txn.rawInsert('INSERT INTO '
           '${Product.tblProduct} ( ${Product.dbId}, ${Product.dbCorporationId}, ${Product.dbCorporationName}, ${Product.dbTitle},'
           ' ${Product.dbImage}, ${Product.dbDescription}, ${Product.dbCreateDate}, ${Product.dbUpdateDate} )'
@@ -261,8 +255,7 @@ class AppDatabase {
           ' "assets/powaco/guest6.jpg", "Chất lượng điện năng: đảm bảo cấp điện ổn định, liên tục, an toàn cho bên mua điện.'
           '\n\nChất lượng dịch vụ sữa chữa: Khôi phục kịp thời việc cấp điện cho bên mua điện theo quy định của pháp luật.'
           '\n\nCông ty lắp đặt điện kế theo phương thức không thu tiền đối với hộ sử dụng điện cho mục đích sinh hoạt có khoảng cách từ trụ điện đến nhà khách hàng từ  30 mét  trở xuống, kể từ ngày 01/07/2016.'
-          ' ", "2019/02/20", "2019/02/20" )'
-      );
+          ' ", "2019/02/20", "2019/02/20" )');
       txn.rawInsert('INSERT INTO '
           '${Product.tblProduct} ( ${Product.dbId}, ${Product.dbCorporationId}, ${Product.dbCorporationName}, ${Product.dbTitle},'
           ' ${Product.dbImage}, ${Product.dbDescription}, ${Product.dbCreateDate}, ${Product.dbUpdateDate} )'
@@ -270,17 +263,14 @@ class AppDatabase {
           ' "assets/powaco/guest3.jpg", "Từ năm 2017, nhận thấy lĩnh vực điện năng lượng mắt trời đang được ứng dụng rộng rãi với lợi thế có nguồn tài nguyên năng lượng mặt trời dồi dào đặc trưng khu vực Tây Nam bộ, đặc biệt là các diện tích sẵn có tại các nhà máy nước, lượng khách hang tiềm năng đông đảo hiện có, Công ty đã mở rộng sang lĩnh vực mới về Kinh doanh điện NLMT. Được Sở Kế Hoạch Đầu tư tỉnh An Giang cấp giấy xác nhận đăng ký kinh doanh lĩnh vực lắp đặt, sửa chữa, bán buôn thiết bị sử dụng năng lượng mặt trời, pin mặt trời tại giấy xác nhận số 14456/17 ngày 17 tháng 10 năm 2017.'
           '\n\nCuối năm 2017 và đầu năm 2018, Công ty đã đưa vào lắp đặt và đưa vào vận hành hệ thống điện NLMT cho văn phòng Công ty và Nhà máy nước Tri Tôn với công suất 20kWp/ đơn vị.'
           '\n\nBên cạnh đó Công ty đã thực hiện kinh doanh lắp đặt hệ thống điện NLMT cho các khách hàng đầu tiên có công suất từ 3kWp đến 50kWp và tiếp tục mở rộng kinh doanh hệ thống điện NLMT cho các khách hàng có nhu cầu phục vụ ánh sáng sinh hoạt và sản xuất.'
-          ' ", "2019/02/20", "2019/02/20" )'
-      );
+          ' ", "2019/02/20", "2019/02/20" )');
       txn.rawInsert('INSERT INTO '
           '${Product.tblProduct} ( ${Product.dbId}, ${Product.dbCorporationId}, ${Product.dbCorporationName}, ${Product.dbTitle},'
           ' ${Product.dbImage}, ${Product.dbDescription}, ${Product.dbCreateDate}, ${Product.dbUpdateDate} )'
           ' VALUES ( 5, 1, "POWACO", "Kinh doanh bất động sản, đất nền biệt thự",'
           ' "assets/powaco/guest4.jpg", "Bảng giá đất nền khu biệt thự vườn Châu Đốc - Núi Sam.'
           '\nXem chi tiết trên Website Công ty Cổ phần Điện Nước An Giang.'
-          ' ", "2019/02/20", "2019/02/20" )'
-      );
-
+          ' ", "2019/02/20", "2019/02/20" )');
     });
   }
 
@@ -299,8 +289,7 @@ class AppDatabase {
           "${Customer.dbContents} TEXT,"
           "${Customer.dbDescription} TEXT,"
           "${Customer.dbCreateDate} TEXT,"
-          "${Customer.dbUpdateDate} TEXT );"
-      );
+          "${Customer.dbUpdateDate} TEXT );");
       txn.rawInsert('INSERT INTO '
           '${Customer.tblCustomer} ( ${Customer.dbId}, ${Customer.dbCorporationId}, ${Customer.dbCorporationName}, ${Customer.dbTitle},'
           ' ${Customer.dbImage}, ${Customer.dbDescription}, ${Customer.dbCreateDate}, ${Customer.dbUpdateDate} )'
@@ -308,8 +297,7 @@ class AppDatabase {
           ' "assets/powaco/guest5.jpg", "  Căn cứ quyết định số 23/2015/QĐ-UBND ngày 18/08/2015 của UBND Tỉnh An Giang ban hành giá tiêu thụ nước sạch trên địa bàn tỉnh do Công Ty Cổ phần Điện Nước An Giang cung ứng.'
           '\nCăn cứ quyết định số 40/2017/QĐ-UBND ngày 01/08/2017 của UBND Tỉnh An Giang V/v qui định mức thu, mức trích để lại cho tổ chức thu phí và bố trí sử dụng nguồn phí bảo vệ môi trường đối với nước thải sinh hoạt trên địa bàn tỉnh An giang.'
           '\nXem chi tiết trên Website công ty.'
-          ' ", "2019/02/20", "2019/02/20" )'
-      );
+          ' ", "2019/02/20", "2019/02/20" )');
       txn.rawInsert('INSERT INTO '
           '${Customer.tblCustomer} ( ${Customer.dbId}, ${Customer.dbCorporationId}, ${Customer.dbCorporationName}, ${Customer.dbTitle},'
           ' ${Customer.dbImage}, ${Customer.dbDescription}, ${Customer.dbCreateDate}, ${Customer.dbUpdateDate} )'
@@ -317,8 +305,7 @@ class AppDatabase {
           ' "assets/powaco/guest4.jpg", "Căn cứ Văn bản số 23/VBHN-BCT ngày 16/10/2018 của Bộ trưởng Bộ Công thương về việc xác thực văn bản hợp nhất Thông tư số 16/2014/TT-BCT và Thông tư số 25/2018/TT-BCT của Bộ Công thương Quy định về thực hiện giá bán điện.'
           '\nCăn cứ Quyết định số 648/QĐ-BCT ngày 20/03/2019 của Bộ Công thương về việc điều chỉnh mức giá bản lẻ điện bình quân và quy định giá bán điện.'
           '\nXem chi tiết trên Website công ty.'
-          ' ", "2019/02/20", "2019/02/20" )'
-      );
+          ' ", "2019/02/20", "2019/02/20" )');
     });
   }
 
@@ -337,8 +324,7 @@ class AppDatabase {
           "${Contact.dbContents} TEXT,"
           "${Contact.dbDescription} TEXT,"
           "${Contact.dbCreateDate} TEXT,"
-          "${Contact.dbUpdateDate} TEXT );"
-      );
+          "${Contact.dbUpdateDate} TEXT );");
       txn.rawInsert('INSERT INTO '
           '${Contact.tblContact} ( ${Contact.dbId}, ${Contact.dbCorporationId}, ${Contact.dbCorporationName}, ${Contact.dbTitle},'
           ' ${Contact.dbImage}, ${Contact.dbDescription}, ${Contact.dbCreateDate}, ${Contact.dbUpdateDate} )'
@@ -347,10 +333,7 @@ class AppDatabase {
           '\nEmail: ctydn_ag@gmail.com, ctycpdn.ag@gmail.com'
           '\nSố điện thoại: 0296.3856100.'
           '\nĐường dây nóng: 19009090.'
-          ' ", "2019/02/20", "2019/02/20" )'
-      );
+          ' ", "2019/02/20", "2019/02/20" )');
     });
   }
-
-
 }
