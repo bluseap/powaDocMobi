@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:powa_doc/bloc/bloc_provider.dart';
+import 'package:powa_doc/pages/home/home.dart';
 import 'package:powa_doc/pages/home/home_bloc.dart';
 import 'package:powa_doc/pages/about/about.dart';
 
@@ -19,7 +20,7 @@ import 'package:powa_doc/pages/contact/contact_db.dart';
 import 'package:powa_doc/pages/contact/contact_bloc.dart';
 import 'package:powa_doc/pages/contact/contact_widget.dart';
 
-import 'package:powa_doc/pages/home/StatefulLogin.dart';
+import 'package:powa_doc/pages/registerdoc/registerdoc_user.dart';
 
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -37,6 +38,9 @@ class _SideDrawer extends State<SideDrawer> {
   String avatar = "";
   String fullname = "";
 
+  bool visibilityTag = false;
+  bool visibilityLogin = false;
+
   @override
   void initState() {
     super.initState();
@@ -45,14 +49,22 @@ class _SideDrawer extends State<SideDrawer> {
 
   void loginUser() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    token = (prefs.getString('token') ?? "");
-    useremail = (prefs.getString('useremail') ?? "");
-    userid = (prefs.getString('userid') ?? "");
-    username = (prefs.getString('username') ?? "");
-    avatar = (prefs.getString('avatar') ?? "");
-    fullname = (prefs.getString('fullname') ?? "");
+    setState(() {
+      token = (prefs.getString('token') ?? "");
+      useremail = (prefs.getString('useremail') ?? "");
+      userid = (prefs.getString('userid') ?? "");
+      username = (prefs.getString('username') ?? "");
+      avatar = (prefs.getString('avatar') ?? "");
+      fullname = (prefs.getString('fullname') ?? "");
 
-    setState(() {});
+      if (token == "") {
+        visibilityTag = false;
+        visibilityLogin = true;
+      } else {
+        visibilityTag = true;
+        visibilityLogin = false;
+      }
+    });
   }
 
   @override
@@ -132,15 +144,56 @@ class _SideDrawer extends State<SideDrawer> {
                     : AssetImage("assets/logoPOWA.png")),
           ),
           BlocProvider(bloc: IntroBloc(IntroDB.get()), child: IntroPage()),
-          /*BlocProvider(
-              bloc: NewsBloc(NewsDB.get()),
-              child: NewsPage()
-          ),*/
           BlocProvider(
               bloc: ProductBloc(ProductDB.get()), child: ProductPage()),
           BlocProvider(
               bloc: CustomerBloc(CustomerDB.get()), child: CustomerPage()),
-          BlocProvider(bloc: ContactBloc(ContactDB.get()), child: ContactPage())
+          BlocProvider(
+              bloc: ContactBloc(ContactDB.get()), child: ContactPage()),
+          visibilityTag
+              ? FlatButton(
+                  onPressed: () async {
+                    SharedPreferences prefs =
+                        await SharedPreferences.getInstance();
+                    prefs.clear();
+                    prefs.commit();
+
+                    var blocHome2Provider =
+                        BlocProvider(bloc: HomeBloc(), child: HomePage());
+                    await Navigator.push(
+                        context,
+                        MaterialPageRoute<bool>(
+                            builder: (context) => blocHome2Provider));
+                  },
+                  child: Row(
+                    children: [
+                      Icon(Icons.open_in_new),
+                      Text("         Đăng xuất",
+                          style: TextStyle(
+                              fontSize: 14.0, fontWeight: FontWeight.bold))
+                    ],
+                  ),
+                )
+              : FlatButton(
+                  onPressed: () async {
+                    var blocLabelProvider = BlocProvider(
+                      bloc: IntroBloc(IntroDB.get()),
+                      child: RegisterDocUser(),
+                    );
+                    await Navigator.push(
+                        context,
+                        MaterialPageRoute<bool>(
+                            builder: (context) => blocLabelProvider));
+                  },
+                  child: Row(
+                    children: [
+                      Icon(Icons.login),
+                      Text("         Đăng nhập",
+                          style: TextStyle(
+                              fontSize: 14.0, fontWeight: FontWeight.bold))
+                    ],
+                  ),
+                ),
         ],
       ),
     );

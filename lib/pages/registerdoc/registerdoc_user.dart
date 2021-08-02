@@ -189,7 +189,7 @@ class DropDownState extends State<RegisterDocUser> {
       appBar: AppBar(
         title: Text("Đăng ký nhận tin"),
       ),
-      floatingActionButton: FloatingActionButton(
+      /*floatingActionButton: FloatingActionButton(
           child: Icon(
             Icons.near_me,
             color: Colors.white,
@@ -201,7 +201,7 @@ class DropDownState extends State<RegisterDocUser> {
             String username = (_apiResponse.Data as Login).username;
 
             thongbao(username);
-          }),
+          }),*/
       body: Container(
         alignment: Alignment.bottomCenter,
         child: Stack(children: <Widget>[
@@ -224,8 +224,8 @@ class DropDownState extends State<RegisterDocUser> {
                   FieldUserName,
                   SizedBox(height: 20.0),
                   FieldPass,
-                  SizedBox(height: 20.0),
-                  registerNameCode,
+                  //SizedBox(height: 20.0),
+                  //registerNameCode,
                   SizedBox(height: 30.0),
                   loginButon,
                 ],

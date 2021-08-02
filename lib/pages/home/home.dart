@@ -127,7 +127,7 @@ class HomePage extends StatelessWidget {
               return Text(snapshot.data);
             }),
       ),
-      floatingActionButton: FloatingActionButton(
+      /*floatingActionButton: FloatingActionButton(
         child: Icon(
           Icons.add,
           color: Colors.white,
@@ -141,7 +141,7 @@ class HomePage extends StatelessWidget {
           await Navigator.push(context,
               MaterialPageRoute<bool>(builder: (context) => blocLabelProvider));
         },
-      ),
+      ),*/
       drawer: SideDrawer(),
       body: ChangeNotifierProvider<AppState>(
           create: (_) => AppState(),
